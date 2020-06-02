@@ -16,7 +16,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      flash[:success] = "Successfully created a Post!"
+      flash.notice = "Successfully created a Post!"
       redirect_to @post
     else 
       flash.now[:danger] = "Can't create this Post. There are some errors in your form."
@@ -29,13 +29,15 @@ class PostsController < ApplicationController
   end
 
   def update
-    
+    @post = Post.find(params[:id])
+    @post.update(post_params)
+    flash.notice = "Post '#{@post.title}' was updated!"
+    redirect_to post_path(@post)
   end
 
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    # flash[:info] = "#{@post.title} has been deleted."
     flash.notice = "Post '#{@post.title}' was deleted!"
     redirect_to posts_path
   end

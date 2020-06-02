@@ -1,2 +1,9 @@
-<h1>Nav bar</h1>
-<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+<div>
+  <h1>Odin Book</h1>
+  <% if user_signed_in? %>
+    <h3>Signed in as: <%= current_user.email %></h3>
+    <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <% else %>
+    <a href=<%= new_user_session_url %>>Sign in</a>
+  <% end %>
+</div>

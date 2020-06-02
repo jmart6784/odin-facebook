@@ -1,6 +1,17 @@
 <h1>Show Post</h1>
 
-<h3><%= @post.title %></h3>
-<p><%= @post.body %></p>
+<h3>
+  <strong>Title: </strong>
+  <%= @post.title %>
+</h3>
+<p>
+  <strong>Content: </strong>
+  <%= @post.body %>
+</p>
+
+<%= link_to "Edit", edit_post_path(@post) %><br>
+<%= link_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" } %>
+
+<br>
 
 <%= link_to "All Posts", posts_path %>
