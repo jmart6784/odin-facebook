@@ -1,0 +1,48 @@
+class PostsController < ApplicationController
+
+  def index
+    @posts = Post.all
+  end
+
+  def show
+    @post = Post.find(params[:id])
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new(post_params)
+
+    if @post.save
+      flash[:success] = "Successfully created a Post!"
+      redirect_to @post
+    else 
+      flash.now[:danger] = "Can't create this Post. There are some errors in your form."
+      render "new"
+    end
+  end
+
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    # flash[:info] = "#{@post.title} has been deleted."
+    flash.notice = "Post '#{@post.title}' was deleted!"
+    redirect_to posts_path
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
+end
