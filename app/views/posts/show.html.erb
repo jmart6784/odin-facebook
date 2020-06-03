@@ -20,3 +20,8 @@
 <br>
 
 <%= link_to "All Posts", posts_path %>
+
+<br>
+
+<%= render partial: 'posts/comment', collection: @post.comments %>
+<%= render partial: 'comments/form' %>
