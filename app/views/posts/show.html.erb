@@ -14,8 +14,10 @@
   <%= @post.body %>
 </p>
 
-<%= link_to "Edit", edit_post_path(@post) %><br>
-<%= link_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" } %>
+<% if current_user.id == @post.user_id %>
+  <%= link_to "Edit", edit_post_path(@post) %><br>
+  <%= link_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>
 
 <br>
 
@@ -23,5 +25,5 @@
 
 <br>
 
-<%= render partial: 'posts/comment', collection: @post.comments %>
 <%= render partial: 'comments/form' %>
+<%= render partial: 'posts/comment', collection: @post.comments %>
