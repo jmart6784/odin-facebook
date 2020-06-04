@@ -1,7 +1,9 @@
 <div>
-  <h4>Comment by: <%= User.find(comment.user_id).email %></h4>
+  <h4>
+    Comment by: <%= User.find(comment.user_id).first_name + " " + User.find(comment.user_id).last_name %>
+  </h4>
+  
   <p class="comment"><%= comment.body %></p>
-  <p>Comment ID: <%= comment.id %></p>
 
   <% if current_user.id == comment.user_id %>
     <%= link_to "Edit Comment", edit_post_comment_path(@post.id, comment.id) %>

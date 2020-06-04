@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :comments
-  # attr_accessible :first_name, :lastname
+
+  validates :first_name, :last_name, presence: true, length: { minimum: 3 }
 end
