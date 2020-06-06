@@ -2,14 +2,61 @@
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Welcome to Odin Book, <%= @user.first_name + " " + @user.last_name %></h1>
-    <p>You have successfully signed up to Odin Book.</p>
-    <br>
-    <p>
-      Connect with friends, just follow this link: <%= @url %>.
-    </p>
-    <p>Thanks for joining and have a great day!</p>
+    <h1 id="title">Odin Book</h1>
+
+    <div id="p-container">
+      <h3 id="p-title">Welcome to Odin Book, <%= @user.first_name + " " + @user.last_name %></h3>
+      <p>You have successfully signed up to Odin Book.</p>
+      <br>
+      <p>
+        Connect with friends, just follow this link: <%= @url %>
+      </p>
+      <p>Thanks for joining and have a great day!</p>
+    </div>
+
+    <style>
+      * {
+        font-family: 'Titillium Web', sans-serif;
+      }
+
+      #title {
+        color: white;
+        background-color: rgb(25, 128, 114);
+        text-align: center;
+        font-size: 60px;
+        padding: 20px;
+        margin: 0px;
+        border: 10px solid white;
+      }
+
+      body {
+        background-color: rgb(10, 53, 47);
+      }
+
+      #p-container {
+        color: white;
+        background-color: rgb(7, 37, 34);
+        border: 5px solid white;
+        text-align: center;
+        margin: 0 auto;
+        font-size: 30px;
+        padding: 0px;
+        margin: 0 auto;
+        margin-top: 100px;
+        width: 50%;
+        border-radius: 20px;
+      }
+
+      #p-title {
+        margin: 0px;
+        background-color: rgb(25, 128, 114);
+        border-radius: 15px 15px 0px 0px;
+        border-bottom: 5px solid white;
+        padding: 5px;
+      }
+    </style>
   </body>
 </html>
