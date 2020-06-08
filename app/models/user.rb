@@ -24,7 +24,7 @@ class User < ApplicationRecord
     end
   end
       
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :comments
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }

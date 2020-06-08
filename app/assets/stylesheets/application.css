@@ -1,7 +1,25 @@
-body {
-  background-color: rgb(15, 15, 15);
+* {
+  font-family: 'Assistant', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, th, tr, label {
+body {
+  background-color: rgb(15, 15, 15);
+  margin: 0px;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
   color: rgb(173, 173, 173);
+}
+
+#navbar {
+  display: grid;
+  grid-template-columns: 1fr 0.15fr;
+  background-color: rgb(15, 87, 77);
+  padding: 10px;
+  margin: 0px;
+}
+
+#logged-status {
+  padding-right: 15px;
+  text-align: right;
 }
