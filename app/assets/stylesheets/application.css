@@ -12,6 +12,9 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
 }
 
 #navbar {
+  position: fixed;
+  width: 100%;
+  top: 0px;
   display: grid;
   grid-template-columns: 1fr 0.15fr;
   background-color: rgb(15, 87, 77);
@@ -19,7 +22,15 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
   margin: 0px;
 }
 
+#navbar:hover {
+  opacity: 50%;
+}
+
 #logged-status {
   padding-right: 15px;
   text-align: right;
+}
+
+#bg {
+  margin-top: 115px;
 }

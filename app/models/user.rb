@@ -25,11 +25,21 @@ class User < ApplicationRecord
   end
       
   has_many :posts, dependent: :destroy
-  has_many :comments
+  has_many :comments, dependent: :destroy
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
 
   after_create :send_welcome_email
+
+  def add_friend(another_user)
+    friends << another_user
+  end
+
+  def is_friend?(another_user)
+    friends.include?(another_user)
+  end
 
   private
 

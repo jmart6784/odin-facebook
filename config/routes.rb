@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index]
 
+  resources :friendships
+
   resources :posts do
     resources :comments
   end

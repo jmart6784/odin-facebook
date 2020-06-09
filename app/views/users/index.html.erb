@@ -1,7 +1,30 @@
 <h1>All Users</h1>
 
-<ul>
-  <% @users.each do |user| %>
-    <li><%= user.first_name %> <%= user.last_name %></li>
-  <% end %>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Add/Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+
+    <% next if current_user.id == user.id %>
+      <tr>
+        <td><%= user.first_name %> <%= user.last_name %></td>
+
+        <td>
+          <% if current_user.is_friend?(user) %>
+            <%= link_to "Remove Friend", "" %>
+          <% else %>
+            <%= form_for current_user.friendships.build(friend: user) do |f| %>
+              <%= f.hidden_field :friend_id %>
+              <%= f.submit "ADD FRIEND" %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
