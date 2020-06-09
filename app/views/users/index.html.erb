@@ -8,17 +8,17 @@
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user| %>
+    <% @users.each do |another_user| %>
 
-    <% next if current_user.id == user.id %>
+    <% next if current_user.id == another_user.id %>
       <tr>
-        <td><%= user.first_name %> <%= user.last_name %></td>
+        <td><%= another_user.first_name %> <%= another_user.last_name %></td>
 
         <td>
-          <% if current_user.is_friend?(user) %>
-            <%= link_to "Remove Friend", "" %>
+          <% if current_user.is_friend?(another_user) %>
+            <%= link_to "Remove Friend", removefriend_path(user_id: another_user.id), method: :delete %>
           <% else %>
-            <%= form_for current_user.friendships.build(friend: user) do |f| %>
+            <%= form_for current_user.friendships.build(friend: another_user) do |f| %>
               <%= f.hidden_field :friend_id %>
               <%= f.submit "ADD FRIEND" %>
             <% end %>
