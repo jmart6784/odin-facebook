@@ -5,7 +5,11 @@
 
   <div id="logged-status">
     <% if user_signed_in? %>
-      <h3 id="logged-as">Logged in as: <%= current_user.first_name + " " + current_user.last_name %></h3>
+      <h3 id="logged-as">Logged in as: 
+        <%= link_to User.find(current_user.id) do %>
+          <%= current_user.first_name + " " + current_user.last_name %>
+        <% end %>
+      </h3>
       <%= link_to "Log Out", destroy_user_session_path, method: :delete, id: "logout-link" %>
     <% else %>
       <a href=<%= new_user_session_url %>>Log in</a>

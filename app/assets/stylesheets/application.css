@@ -40,9 +40,9 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
 /* Notice (flash) */
 .notice { 
   width: 100%;
-  font-size: 20px;
-  background-color: rgb(128, 211, 186);
-  color: rgb(20, 53, 50);
+  font-size: 25px;
+  background-color: rgb(107, 194, 168);
+  color: rgb(0, 0, 0);
   text-align: center;
   margin: 0px;
   display: block;

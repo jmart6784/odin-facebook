@@ -2,23 +2,44 @@
 
 <h3><%= @user.first_name + " " + @user.last_name %></h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th># of Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.posts.each do |post| %>
+<% if @user.posts.exists? %>
+  <table>
+    <thead>
       <tr>
-        <td><%= post.title %></td>
-        <td><%= post.body %></td>
-        <td><%= post.comments.count %></td>
+        <th>User</th>
+        <th>Title</th>
+        <th>Content</th>
+        <% if current_user.id == @user.id %>
+          <th>Edit</th>
+          <th>Delete</th>
+        <% end %>
+        <th># of Comments</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @user.posts.each do |post| %>
+        <tr>
+          <td><%= @user.first_name + " " + @user.last_name %></td>
+          <td><%= post.title %></td>
+          <td><%= post.body %></td>
+          <% if current_user.id == post.user_id %>
+            <td><%= link_to "Edit", edit_post_path(post) %></td>
+            <td><%= link_to "Delete", post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+          <td><%= post.comments.count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% elsif current_user.id == @user.id %>
+  <p>You haven't posted anything</p>
+  <p>Add a post <%= link_to "here", new_post_path %>.</p>
+<% else %>
+  <p><%= @user.first_name + " " + @user.last_name + " hasn't posted yet." %></p>
+<% end %>
 
+<% if current_user.id == @user.id %>
+  <%= link_to "New Post", new_post_path %>
+<% end %>
+<br>
 <%= link_to "Back", users_path %>
