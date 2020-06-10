@@ -1,6 +1,6 @@
 <% if @post.errors.any? %>
   <div>
-    <%= flash[:danger] %>
+    <p><%= flash[:danger] %></p>
     <ul>
       <% @post.errors.full_messages.each do |msg| %>
         <li><span><%= msg %></span></li>

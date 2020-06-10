@@ -6,7 +6,7 @@
   <p class="comment"><%= comment.body %></p>
 
   <% if current_user.id == comment.user_id %>
-    <%= link_to "Edit Comment", edit_post_comment_path(@post.id, comment.id) %>
-    <%= link_to "Delete Comment", post_comment_path(@post.id, comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= link_to "Edit", edit_post_comment_path(@post.id, comment.id) %>
+    <%= link_to "Delete", post_comment_path(@post.id, comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
   <% end %>
 </div>

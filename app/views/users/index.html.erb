@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>User</th>
+      <th>Show</th>
       <th>Add/Remove</th>
     </tr>
   </thead>
@@ -13,6 +14,8 @@
     <% next if current_user.id == another_user.id %>
       <tr>
         <td><%= another_user.first_name %> <%= another_user.last_name %></td>
+
+        <td><%= link_to "Show", another_user %></td>
 
         <td>
           <% if current_user.is_friend?(another_user) %>

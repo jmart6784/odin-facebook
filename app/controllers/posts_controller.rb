@@ -23,7 +23,7 @@ class PostsController < ApplicationController
       flash.notice = "Successfully created a Post!"
       redirect_to @post
     else 
-      flash.now[:danger] = "Can't create this Post. There are some errors in your form."
+      flash.now[:danger] = "Can't create this Post, there are errors."
       render "new"
     end
   end

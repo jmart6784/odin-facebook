@@ -11,12 +11,14 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
   color: rgb(173, 173, 173);
 }
 
+/* Nav bar */
 #navbar {
   position: fixed;
   width: 100%;
+  height: 10%;
   top: 0px;
   display: grid;
-  grid-template-columns: 1fr 0.15fr;
+  grid-template-columns: 1fr 0.20fr;
   background-color: rgb(15, 87, 77);
   padding: 10px;
   margin: 0px;
@@ -27,10 +29,30 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
 }
 
 #logged-status {
-  padding-right: 15px;
+  padding-right: 25px;
   text-align: right;
 }
 
 #bg {
   margin-top: 115px;
+}
+
+/* Notice (flash) */
+.notice { 
+  width: 100%;
+  font-size: 20px;
+  background-color: rgb(128, 211, 186);
+  color: rgb(20, 53, 50);
+  text-align: center;
+  margin: 0px;
+  display: block;
+}
+
+/* Post index page */
+#index-new-post-link {
+  font-size: 50px;
+}
+
+#index-post-users-link {
+  font-size: 50px;
 }

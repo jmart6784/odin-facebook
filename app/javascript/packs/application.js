@@ -15,3 +15,17 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+// Hide flash messages
+window.setTimeout(function() {
+  let style = document.createElement('style');
+
+  style.innerHTML =
+    '.notice {' +
+      'display: none;' +
+    '}'
+
+  let ref = document.querySelector('script');
+
+  ref.parentNode.insertBefore(style, ref);
+}, 3000);
