@@ -26,8 +26,12 @@ class User < ApplicationRecord
       
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
+
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
+
+  has_many :incoming_friend_requests, class_name: 'FriendRequest', foreign_key: 'target_id', dependent: :destroy
+  has_many :outgoing_friend_requests, class_name: 'FriendRequest', foreign_key: 'requester_id', dependent: :destroy
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
 
