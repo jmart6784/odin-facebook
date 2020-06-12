@@ -11,14 +11,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show, :friend_request, :befriend, :notifications, :get_all_friends]
 
-  delete "removefriend" => "friendships#destroy"
-  resources :friendships
-
-  get 'users/:target_id/friend_request', to: 'users#friend_request', as: 'request'
-  
-  get '/notifications', to: 'users#notifications', as: 'notificaion'
+  resources :friendships, only: [:create, :update, :destroy]
+  get '/notifications', to: 'friendships#notifications'
 
   resources :posts do
     resources :comments

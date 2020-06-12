@@ -4,27 +4,26 @@
   <thead>
     <tr>
       <th>User</th>
-      <th>Show</th>
-      <th>Add/Remove</th>
+      <th>Friendship status</th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |another_user| %>
 
-    <% next if current_user.id == another_user.id %>
+      <% next if current_user.id == another_user.id %>
       <tr>
-        <td><%= another_user.first_name %> <%= another_user.last_name %></td>
-
-        <td><%= link_to "Show", another_user %></td>
+        <td>
+          <%= link_to another_user.first_name + " " + another_user.last_name, another_user %>
+        </td>
 
         <td>
-          <% if current_user.is_friend?(another_user) %>
-            <%= link_to "Remove Friend", removefriend_path(user_id: another_user.id), method: :delete %>
+          <% if friendship = current_user.friendships.find_by(friend_id: another_user)%>
+            <%= friendship.pending? ? "Request: Pending" : "Friend" %>
+          <% elsif friendship = another_user.friendships.find_by(friend_id: current_user)%>
+            <%= link_to "Accept Friend Request", friendship_path(id: another_user), method: :patch %>
+            <%= link_to "Decline Friend Request", friendship_path(id: another_user), method: :delete %>
           <% else %>
-            <%= form_for current_user.friendships.build(friend: another_user) do |f| %>
-              <%= f.hidden_field :friend_id %>
-              <%= f.submit "ADD FRIEND" %>
-            <% end %>
+            <%= link_to 'Friend Request', friendships_path(friend_id: another_user), method: :post %>
           <% end %>
         </td>
       </tr>

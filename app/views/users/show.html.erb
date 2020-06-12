@@ -2,6 +2,24 @@
 
 <h3><%= @user.first_name + " " + @user.last_name %></h3>
 
+<% if @user.friends.find_by(id: current_user) %>
+  <% friendship = Friendship.where(user_id:@user).find_by(friend_id:current_user)  %>
+  <% if friendship.pending? %>
+    <div>
+      <%= link_to "Accept Friend Request", friendship_path, method: :patch %>
+      <%= link_to "Decline Friend Request", friendship_path, method: :delete %>
+    </div>
+  <% else %>
+    <div>
+      <%= link_to "Unfriend", friendship_path, method: :delete %>
+    </div>
+  <% end %>
+<% elsif @user != current_user %>
+  <div>
+    <%= link_to 'Send Friend Request', friendships_path(friend_id:@user), method: :post %>
+  </div>
+<% end %>
+
 <% if @user.posts.exists? %>
   <table>
     <thead>
@@ -20,7 +38,7 @@
       <% @user.posts.each do |post| %>
         <tr>
           <td><%= @user.first_name + " " + @user.last_name %></td>
-          <td><%= post.title %></td>
+          <td><%= link_to post.title, post %></td>
           <td><%= post.body %></td>
           <% if current_user.id == post.user_id %>
             <td><%= link_to "Edit", edit_post_path(post) %></td>
@@ -42,4 +60,4 @@
   <%= link_to "New Post", new_post_path %>
 <% end %>
 <br>
-<%= link_to "Back", users_path %>
+<%= link_to "Back", :back %>

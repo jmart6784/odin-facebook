@@ -1,0 +1,18 @@
+<h1>Notifications</h1>
+
+<% if notifications.empty? %>
+  <h3>No new notifications</h3>
+<% else %>
+  <% notifications.each do |notification| %>
+    <% friendship = Friendship.where(user_id: notification.user.id).find_by(friend_id:current_user)  %>
+
+    <% if friendship %>
+      <div>
+        <h3><%= "#{notification.user.first_name + " " + notification.user.last_name} has requested to be your friend" %></h3>
+        <%= link_to "Accept Friend Request", "friendships/#{notification.user.id}", method: :patch %>
+        <%= link_to "Decline Friend Request", "friendships/#{notification.user.id}", method: :delete %>
+      </div>
+    <% end %>
+  <% end %>
+
+<% end %>

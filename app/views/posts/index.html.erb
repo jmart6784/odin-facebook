@@ -12,11 +12,12 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
-        <td><%= User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name %></td>
-        <td><%= post.title %></td>
+        <td>
+          <%= link_to User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name, User.find(post.user_id) %>
+        </td>
+        <td><%= link_to post.title, post %></td>
         <td><%= post.body %></td>
         <td><%= post.comments.count %></td>
-        <td><%= link_to "Show", post %></td>
         <% if current_user.id == post.user_id %>
           <td><%= link_to "Edit", edit_post_path(post) %></td>
           <td><%= link_to "Delete", post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -26,6 +27,16 @@
   </tbody>
 </table>
 
-<%= link_to "New Post", new_post_path, id: "index-new-post-link" %>
+<%= link_to "New Post", new_post_path, class: "test-link" %>
 <br>
-<%= link_to "All users", users_path, id: "index-post-users-link" %>
+<%= link_to "All users", users_path, class: "test-link" %>
+<br>
+<%= link_to "Notifications", notifications_url, class: "test-link" %>
+
+<% if notifications.empty? %>
+  <h3>Notifications empty</h3>
+<% else %>
+  <h3>
+    You have <%= notifications.count %> new <%= 'notification'.pluralize(notifications.count) %>!
+  </h3>
+<% end %>
