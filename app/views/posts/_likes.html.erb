@@ -1,0 +1,12 @@
+<h3>
+  <%= @post.likes.count %> <%= "Like".pluralize(@post.likes.count) %>
+</h3>
+
+
+<% unless @post.likes.include?(current_user.posts.find(@post.id).likes.first) %>
+  <%= form_for create_like_path(id: params[:id]), method: :post do |f| %>
+    <%= f.submit "Like" %>
+  <% end %>
+<% else %>
+  <h2>UNLIKE</h2>
+<% end %>

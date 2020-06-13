@@ -14,6 +14,8 @@
   <%= @post.body %>
 </p>
 
+<%= render "likes" %>
+<br>
 <% if current_user.id == @post.user_id %>
   <%= link_to "Edit", edit_post_path(@post) %><br>
   <%= link_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" } %>

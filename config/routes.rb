@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :update, :destroy]
   get '/notifications', to: 'friendships#notifications'
 
+  resources :likes, only: [:create, :destroy]
+
+  post '/posts/:id/', to: 'posts#create_like', as: 'create_like'
+
   resources :posts do
     resources :comments
   end

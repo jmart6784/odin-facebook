@@ -9,6 +9,10 @@ class PostsController < ApplicationController
     @user = User.find(@post.user_id)
     @comment = Comment.new
     @comment.post_id = @post.id
+    @likes = @post.likes
+
+    post_likes = @post.likes
+    user_likes = current_user.posts.find(@post.id).likes.first
   end
 
   def new
@@ -45,6 +49,20 @@ class PostsController < ApplicationController
     @post.destroy
     flash.notice = "Post '#{@post.title}' was deleted!"
     redirect_to posts_path
+  end
+
+  def create_like
+    @post = Post.find(params[:id])
+
+    post_likes = @post.likes
+    user_likes = current_user.posts.find(@post.id).likes.first
+
+    if post_likes.include?(user_likes)
+      redirect_back(fallback_location: { controller: "post", action: "show"})
+    else
+      @post.likes.create!(user_id: current_user.id, post_id: @post.id)
+      redirect_back(fallback_location: { controller: "post", action: "show"})
+    end
   end
 
   private
