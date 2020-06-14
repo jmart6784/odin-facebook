@@ -5,10 +5,12 @@
     <tr>
       <th>User</th>
       <th>Title</th>
-      <th>Body</th>
+      <th>Content</th>
       <th># of Comments</th>
       <th>Likes</th>
       <th>Like button</th>
+      <th>Posted at</th>
+      <th>Edited at</th>
     </tr>
   </thead>
   <tbody>
@@ -22,16 +24,25 @@
         <td><%= post.comments.count %></td>
         <td><%= post.likes.count %></td>
         <td>
-          <% if post.likes.include?(Like.find_by(user_id: current_user, post_id: post.id)) %>
+          <% if post.likes.include?(Like.find_by(user_id: current_user.id, post_id: post.id)) %>
             <%= form_for destroy_like_path(id: post), url: destroy_like_path(id: post), method: :delete do |f| %>
               <%= f.submit "Unlike" %>
             <% end %>
           <% else %>
-            <%= form_for destroy_like_path(id: post), url: destroy_like_path(id: post), method: :post do |f| %>
+            <%= form_for create_like_path(id: post), url: create_like_path(id: post), method: :post do |f| %>
               <%= f.submit "Like" %>
             <% end %>
           <% end %>
         </td>
+
+        <% if post.created_at == post.updated_at %>
+          <td><%= time_ago_in_words(post.created_at, include_seconds: true)%> ago</td>
+          <td>No edit</td>
+        <% else %>
+          <td><%= time_ago_in_words(post.created_at, include_seconds: true)%> ago</td>
+          <td>Edited <%= time_ago_in_words(post.updated_at, include_seconds: true)%> ago</td>
+        <% end %>
+
         <% if current_user.id == post.user_id %>
           <td><%= link_to "Edit", edit_post_path(post) %></td>
           <td><%= link_to "Delete", post, method: :delete, data: { confirm: 'Are you sure?' } %></td>

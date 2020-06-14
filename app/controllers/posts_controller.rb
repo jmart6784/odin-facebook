@@ -51,12 +51,12 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     post_likes = @post.likes
-    user_likes = Like.find_by(user_id: current_user, post_id: @post.id)
+    user_likes = Like.find_by(user_id: current_user.id, post_id: @post.id)
 
-    if post_likes.include?(Like.find_by(user_id: current_user, post_id: @post.id))
+    if post_likes.include?(user_likes)
       redirect_back(fallback_location: { controller: "post", action: "show"})
     else
-      @post.likes.create!(user_id: current_user.id, post_id: @post.id)
+      Post.find(@post.id).likes.create!(user_id: current_user.id, post_id: @post.id)
       redirect_back(fallback_location: { controller: "post", action: "show"})
     end
   end
@@ -65,9 +65,9 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     post_likes = @post.likes
-    user_likes = Like.find_by(user_id: current_user, post_id: @post.id)
+    user_likes = Like.find_by(user_id: current_user.id, post_id: @post.id)
 
-    if post_likes.include?(Like.find_by(user_id: current_user, post_id: @post.id))
+    if post_likes.include?(user_likes)
       user_likes.destroy
       redirect_back(fallback_location: { controller: "post", action: "show"})
     else
