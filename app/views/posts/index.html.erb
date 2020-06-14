@@ -8,6 +8,7 @@
       <th>Body</th>
       <th># of Comments</th>
       <th>Likes</th>
+      <th>Like button</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +21,17 @@
         <td><%= post.body %></td>
         <td><%= post.comments.count %></td>
         <td><%= post.likes.count %></td>
+        <td>
+          <% if post.likes.include?(Like.find_by(user_id: current_user, post_id: post.id)) %>
+            <%= form_for destroy_like_path(id: post), url: destroy_like_path(id: post), method: :delete do |f| %>
+              <%= f.submit "Unlike" %>
+            <% end %>
+          <% else %>
+            <%= form_for destroy_like_path(id: post), url: destroy_like_path(id: post), method: :post do |f| %>
+              <%= f.submit "Like" %>
+            <% end %>
+          <% end %>
+        </td>
         <% if current_user.id == post.user_id %>
           <td><%= link_to "Edit", edit_post_path(post) %></td>
           <td><%= link_to "Delete", post, method: :delete, data: { confirm: 'Are you sure?' } %></td>

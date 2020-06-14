@@ -67,15 +67,13 @@ class PostsController < ApplicationController
     post_likes = @post.likes
     user_likes = Like.find_by(user_id: current_user, post_id: @post.id)
 
-
-
-  if post_likes.include?(Like.find_by(user_id: current_user, post_id: @post.id))
-    user_likes.destroy
-    redirect_back(fallback_location: { controller: "post", action: "show"})
-  else
-    redirect_back(fallback_location: { controller: "post", action: "show"})
+    if post_likes.include?(Like.find_by(user_id: current_user, post_id: @post.id))
+      user_likes.destroy
+      redirect_back(fallback_location: { controller: "post", action: "show"})
+    else
+      redirect_back(fallback_location: { controller: "post", action: "show"})
+    end
   end
-end
 
   private
 
