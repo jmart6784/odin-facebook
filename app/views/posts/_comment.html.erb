@@ -1,6 +1,6 @@
 <div>
   <h4>
-    Comment by: <%= User.find(comment.user_id).first_name + " " + User.find(comment.user_id).last_name %>
+    Comment by: <%= link_to User.find(comment.user_id).first_name + " " + User.find(comment.user_id).last_name, User.find(comment.user_id) %>
   </h4>
   <p class="comment"><%= comment.body %></p>
 

@@ -2,7 +2,7 @@
 
 <h3>
   <strong>User: </strong>
-  <%= @user.first_name + " " + @user.last_name %>
+  <%= link_to @user_name, User.find(@post.user_id) %>
 </h3>
 
 <h3>

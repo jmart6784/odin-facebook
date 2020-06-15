@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.all
+    @posts = Post.all.order("created_at DESC")
   end
 
   def show
@@ -9,6 +9,7 @@ class PostsController < ApplicationController
     @user = User.find(@post.user_id)
     @comment = Comment.new
     @comment.post_id = @post.id
+    @user_name = @user.first_name + " " + @user.last_name
   end
 
   def new
@@ -45,6 +46,10 @@ class PostsController < ApplicationController
     @post.destroy
     flash.notice = "Post '#{@post.title}' was deleted!"
     redirect_to posts_path
+  end
+
+  def friend_feed
+    @user_friends = current_user.friends
   end
 
   def create_like

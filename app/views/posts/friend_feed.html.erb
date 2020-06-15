@@ -1,0 +1,62 @@
+<h1>Friends Feed</h1>
+<% unless @user_friends.count == 0 %>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th># of Comments</th>
+      <th>Likes</th>
+      <th>Like button</th>
+      <th>Posted at</th>
+      <th>Edited at</th>
+    </tr>
+  </thead>
+    <tbody>
+      <% post_ary = [] %>
+
+      <% @user_friends.each do |friend| %>
+        <% next if Friendship.where(status: "pending", friend_id: friend.id).exists? %>
+        
+        <% friend.posts.each do |unsorted_posts| %>
+           <% post_ary << unsorted_posts %>
+        <% end %>
+      <% end %>
+
+      <% post_ary.sort_by(&:created_at).reverse!.each do |friend_post| %>   
+        <tr>
+          <td><%= link_to User.find_by(id: friend_post.user_id).first_name + " " + User.find_by(id: friend_post.user_id).last_name, User.find_by(id: friend_post.user_id) %></td>
+          <td><%= link_to friend_post.title, friend_post %></td>
+          <td><%= friend_post.body %></td>
+          <td><%= friend_post.comments.count %></td>
+          <td><%= friend_post.likes.count %></td>
+
+          <td>
+            <% if friend_post.likes.include?(Like.find_by(user_id: current_user.id, post_id: friend_post.id)) %>
+              <%= form_for destroy_like_path(id: friend_post), url: destroy_like_path(id: friend_post), method: :delete do |f| %>
+                <%= f.submit "Unlike" %>
+              <% end %>
+            <% else %>
+              <%= form_for create_like_path(id: friend_post), url: create_like_path(id: friend_post), method: :post do |f| %>
+                <%= f.submit "Like" %>
+              <% end %>
+            <% end %>
+          </td>
+
+          <% if friend_post.created_at == friend_post.updated_at %>
+            <td><%= time_ago_in_words(friend_post.created_at, include_seconds: true)%> ago</td>
+            <td>No edit</td>
+          <% else %>
+            <td><%= time_ago_in_words(friend_post.created_at, include_seconds: true)%> ago</td>
+            <td>Edited <%= time_ago_in_words(friend_post.updated_at, include_seconds: true)%> ago</td>
+          <% end %>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+
+<% else %>
+  <h3>NO FRIENDS ADDED</h3>
+<% end %>

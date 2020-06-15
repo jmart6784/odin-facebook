@@ -3,9 +3,9 @@ class FriendshipsController < ApplicationController
     @friendship = current_user.friendships.build(:friend_id => params[:friend_id])
 
     if @friendship.save
-      redirect_to users_path
+      redirect_back(fallback_location: { controller: "post", action: "index"})
     else
-      redirect_to users_path
+      redirect_back(fallback_location: { controller: "post", action: "index"})
     end
   end
 
@@ -20,6 +20,7 @@ class FriendshipsController < ApplicationController
 
   def destroy
     @friendship = Friendship.where(user_id:params[:id]).where(friend_id:current_user).first
+    
     @friendship.destroy
 
     redirect_to users_path

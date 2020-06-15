@@ -20,6 +20,8 @@
   </div>
 <% end %>
 
+<h3>Joined: <%= time_ago_in_words(@user.created_at) %> ago</h3>
+
 <% if @user.posts.exists? %>
   <table>
     <thead>

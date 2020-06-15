@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   post '/posts/:id/', to: 'posts#create_like', as: 'create_like'
   delete '/posts/:id', to: 'posts#destroy_like', as: 'destroy_like'
 
+  get '/friend_feed', to: 'posts#friend_feed', as: 'friend_feed'
+
   resources :posts do
     resources :comments
   end
