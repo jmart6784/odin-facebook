@@ -10,6 +10,8 @@ class PostsController < ApplicationController
     @comment = Comment.new
     @comment.post_id = @post.id
     @user_name = @user.first_name + " " + @user.last_name
+
+    @like_exists = Like.where(post_id: @post.id, user_id: current_user.id) == [] ? false : true
   end
 
   def new
@@ -50,34 +52,6 @@ class PostsController < ApplicationController
 
   def friend_feed
     @user_friends = current_user.friends
-  end
-
-  def create_like
-    @post = Post.find(params[:id])
-
-    post_likes = @post.likes
-    user_likes = Like.find_by(user_id: current_user.id, post_id: @post.id)
-
-    if post_likes.include?(user_likes)
-      redirect_back(fallback_location: { controller: "post", action: "show"})
-    else
-      Post.find(@post.id).likes.create!(user_id: current_user.id, post_id: @post.id)
-      redirect_back(fallback_location: { controller: "post", action: "show"})
-    end
-  end
-
-  def destroy_like
-    @post = Post.find(params[:id])
-
-    post_likes = @post.likes
-    user_likes = Like.find_by(user_id: current_user.id, post_id: @post.id)
-
-    if post_likes.include?(user_likes)
-      user_likes.destroy
-      redirect_back(fallback_location: { controller: "post", action: "show"})
-    else
-      redirect_back(fallback_location: { controller: "post", action: "show"})
-    end
   end
 
   private

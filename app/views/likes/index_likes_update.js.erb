@@ -1,0 +1,11 @@
+<% Post.all.each do |post| %>
+
+  <% index_like_count = post.likes.count %>
+
+  <% index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
+
+  document.getElementById("post<%= post.id %>").textContent = "<%= index_like_exists %>";
+
+  document.getElementById("index_like_count<%= post.id %>").textContent = "<%= index_like_count %>";
+
+<% end %>

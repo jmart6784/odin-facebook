@@ -13,11 +13,13 @@
   <strong>Content: </strong>
   <%= @post.body %>
 </p>
-<%= render "likes" %>
-<br>
 
+<h2 id="like_count">
+  <%= like_count_text %>
+</h2>
+<h2>Likes</h2>
 
-
+<%= link_to like_text, like_path(id: @post.id), method: :put, remote: true, id: "like_link" %>
 
 <% if @post.created_at == @post.updated_at %>
   <h4>Posted <%= time_ago_in_words(@post.created_at, include_seconds: true)%> ago</h4>
@@ -26,12 +28,6 @@
   <h4>Posted <%= time_ago_in_words(@post.created_at, include_seconds: true)%> ago</h4>
   <h4>Edited <%= time_ago_in_words(@post.updated_at, include_seconds: true)%> ago</h4>
 <% end %>
-
-
-
-
-
-
 <br>
 <% if current_user.id == @post.user_id %>
   <%= link_to "Edit", edit_post_path(@post) %><br>

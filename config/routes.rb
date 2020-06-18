@@ -14,10 +14,17 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :friend_request, :befriend, :notifications, :get_all_friends]
 
   resources :friendships, only: [:create, :update, :destroy]
-  get '/notifications', to: 'friendships#notifications'
 
-  post '/posts/:id/', to: 'posts#create_like', as: 'create_like'
-  delete '/posts/:id', to: 'posts#destroy_like', as: 'destroy_like'
+  resources :likes, only: [:update] do
+    member do
+      put :index_likes_update
+    end
+  end
+
+  # put '/likes/:id', to: 'likes#update', as: 'likes_update'
+  # put '/likes/:index_like_id', to: 'likes#index_update', as: 'index_likes_update'
+
+  get '/notifications', to: 'friendships#notifications'
 
   get '/friend_feed', to: 'posts#friend_feed', as: 'friend_feed'
 
