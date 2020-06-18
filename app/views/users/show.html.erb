@@ -37,23 +37,18 @@
       </tr>
     </thead>
     <tbody>
-      <% @user.posts.each do |post| %>
+      <% @user.posts.order("created_at DESC").each do |post| %>
         <tr>
           <td><%= @user.first_name + " " + @user.last_name %></td>
           <td><%= link_to post.title, post %></td>
           <td><%= post.body %></td>
           <td><%= post.comments.count %></td>
-          <td><%= post.likes.count %></td>
+          <td id=<%= "user_show_like_count#{post.id}"%>><%= post.likes.count %></td>
           <td>
-            <% if post.likes.include?(Like.find_by(user_id: current_user, post_id: post.id)) %>
-            <%= form_for destroy_like_path(id: post), url: destroy_like_path(id: post), method: :delete do |f| %>
-              <%= f.submit "Unlike" %>
-            <% end %>
-          <% else %>
-            <%= form_for destroy_like_path(id: post), url: destroy_like_path(id: post), method: :post do |f| %>
-              <%= f.submit "Like" %>
-            <% end %>
-          <% end %>
+            <% @index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
+
+            <%= link_to @index_like_exists,  user_show_likes_update_like_path(id: params[:id], post_id: post.id), method: :put, remote: true, id: "user_index_#{post.id}" %>
+            
           </td>
 
         <% if post.created_at == post.updated_at %>

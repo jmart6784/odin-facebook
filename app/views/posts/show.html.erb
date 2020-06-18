@@ -19,7 +19,9 @@
 </h2>
 <h2>Likes</h2>
 
-<%= link_to like_text, like_path(id: @post.id), method: :put, remote: true, id: "like_link" %>
+<% @index_like_exists = Like.where(post_id: @post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
+
+<%= link_to @index_like_exists, like_path(id: @post.id), method: :put, remote: true, id: "like_link" %>
 
 <% if @post.created_at == @post.updated_at %>
   <h4>Posted <%= time_ago_in_words(@post.created_at, include_seconds: true)%> ago</h4>

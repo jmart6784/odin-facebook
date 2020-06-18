@@ -1,5 +1,4 @@
 <h1>Notifications</h1>
-
 <% if notifications.empty? %>
   <h3>No new notifications</h3>
 <% else %>
@@ -8,7 +7,10 @@
 
     <% if friendship %>
       <div>
-        <h3><%= "#{notification.user.first_name + " " + notification.user.last_name} has requested to be your friend" %></h3>
+        <h3>
+          <%= link_to notification.user.first_name + " " + notification.user.last_name, User.find(notification.user_id) %>
+          wants to be your friend
+        </h3>
         <%= link_to "Accept Friend Request", "friendships/#{notification.user.id}", method: :patch %>
         <%= link_to "Decline Friend Request", "friendships/#{notification.user.id}", method: :delete %>
       </div>

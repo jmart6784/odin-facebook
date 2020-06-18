@@ -18,11 +18,9 @@ Rails.application.routes.draw do
   resources :likes, only: [:update] do
     member do
       put :index_likes_update
+      put :user_show_likes_update
     end
   end
-
-  # put '/likes/:id', to: 'likes#update', as: 'likes_update'
-  # put '/likes/:index_like_id', to: 'likes#index_update', as: 'index_likes_update'
 
   get '/notifications', to: 'friendships#notifications'
 

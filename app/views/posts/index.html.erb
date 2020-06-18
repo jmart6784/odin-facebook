@@ -25,7 +25,7 @@
         <td>
           <% @index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
 
-          <%= link_to @index_like_exists, index_likes_update_like_path(id: post.id), method: :put, remote: true, id: "post#{post.id}" %>
+          <%= link_to @index_like_exists, index_likes_update_like_path(id: post.id), method: :put, remote: true, id: "post_index_#{post.id}" %>
         </td>
         <% if post.created_at == post.updated_at %>
           <td><%= time_ago_in_words(post.created_at, include_seconds: true)%> ago</td>

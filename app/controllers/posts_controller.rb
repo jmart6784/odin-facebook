@@ -10,8 +10,6 @@ class PostsController < ApplicationController
     @comment = Comment.new
     @comment.post_id = @post.id
     @user_name = @user.first_name + " " + @user.last_name
-
-    @like_exists = Like.where(post_id: @post.id, user_id: current_user.id) == [] ? false : true
   end
 
   def new
