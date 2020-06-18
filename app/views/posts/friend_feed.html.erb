@@ -31,20 +31,12 @@
           <td><%= link_to friend_post.title, friend_post %></td>
           <td><%= friend_post.body %></td>
           <td><%= friend_post.comments.count %></td>
-          <td><%= friend_post.likes.count %></td>
-
+          <td id=<%= "friend_feed_like_count#{friend_post.id}" %>><%= friend_post.likes.count %></td>
           <td>
-            <% if friend_post.likes.include?(Like.find_by(user_id: current_user.id, post_id: friend_post.id)) %>
-              <%= form_for destroy_like_path(id: friend_post), url: destroy_like_path(id: friend_post), method: :delete do |f| %>
-                <%= f.submit "Unlike" %>
-              <% end %>
-            <% else %>
-              <%= form_for create_like_path(id: friend_post), url: create_like_path(id: friend_post), method: :post do |f| %>
-                <%= f.submit "Like" %>
-              <% end %>
-            <% end %>
-          </td>
+            <% @index_like_exists = Like.where(post_id: friend_post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
 
+            <%= link_to @index_like_exists, friend_feed_likes_update_like_path(id: friend_post.id), method: :put, remote: true, id: "friend_feed_#{friend_post.id}" %>
+          </td>
           <% if friend_post.created_at == friend_post.updated_at %>
             <td><%= time_ago_in_words(friend_post.created_at, include_seconds: true)%> ago</td>
             <td>No edit</td>

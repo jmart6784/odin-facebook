@@ -43,11 +43,11 @@
           <td><%= link_to post.title, post %></td>
           <td><%= post.body %></td>
           <td><%= post.comments.count %></td>
-          <td id=<%= "user_show_like_count#{post.id}"%>><%= post.likes.count %></td>
+          <td id=<%= "user_show_like_count#{post.id}" %>><%= post.likes.count %></td>
           <td>
             <% @index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
 
-            <%= link_to @index_like_exists,  user_show_likes_update_like_path(id: params[:id], post_id: post.id), method: :put, remote: true, id: "user_index_#{post.id}" %>
+            <%= link_to @index_like_exists, user_show_likes_update_like_path(id: params[:id], post_id: post.id), method: :put, remote: true, id: "user_index_#{post.id}" %>
             
           </td>
 
