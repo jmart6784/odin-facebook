@@ -4,32 +4,17 @@
 
 <h3><%= @user.first_name + " " + @user.last_name %></h3>
 
-<% if @user.friends.find_by(id: current_user) %>
-  <% friendship = Friendship.where(user_id:@user).find_by(friend_id:current_user)  %>
-
-
-  <% if current_user.friendships.find_by(friend_id: another_user).exists? %>
-    <h3>Request pending</h3>
-
-  <% elsif friendship.pending? %>
-    <div>
-      <%= link_to "Accept Friend Request", friendship_path, method: :patch %>
-      <%= link_to "Decline Friend Request", friendship_path, method: :delete %>
-    </div>
-
-
-
-
-
+<% if friendship = current_user.friendships.find_by(friend_id: @user.id)%>
+  <% if friendship.pending? %>
+    <h3>Request: Pending</h3>
   <% else %>
-    <div>
-      <%= link_to "Unfriend", friendship_path, method: :delete %>
-    </div>
+    <h3>Friend</h3>
   <% end %>
-<% elsif @user != current_user %>
-  <div>
-    <%= link_to 'Send Friend Request', friendships_path(friend_id: @user), method: :post %>
-  </div>
+<% elsif friendship = @user.friendships.find_by(friend_id: current_user)%>
+  <%= link_to "Accept Friend Request", friendship_path(id: @user.id), method: :patch %>
+  <%= link_to "Decline Friend Request", friendship_path(id: @user.id), method: :delete %>
+<% else %>
+  <%= link_to 'Friend Request', friendships_path(friend_id: @user.id), method: :post %>
 <% end %>
 
 <h3>Joined: <%= time_ago_in_words(@user.created_at) %> ago</h3>
@@ -37,8 +22,9 @@
 <% if @user.bio %>
   <h3>Bio:</h3>
   <p><%= @user.bio %></p>
+  <%= link_to "Edit Bio", edit_user_registration_path if current_user == @user %>
 <% else %>
-  <h3>No Bio</h3>
+  <h3>(No Bio)</h3>
 <% end %>
 
 <% if @user.posts.exists? %>

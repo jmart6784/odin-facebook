@@ -22,7 +22,11 @@
 
         <td>
           <% if friendship = current_user.friendships.find_by(friend_id: another_user)%>
-            <%= friendship.pending? ? "Request: Pending" : "Friend" %>
+              <% if friendship.pending? %>
+                <td>Request: Pending</td>
+              <% else %>
+                <td>Friend</td>
+              <% end %>
           <% elsif friendship = another_user.friendships.find_by(friend_id: current_user)%>
             <%= link_to "Accept Friend Request", friendship_path(id: another_user), method: :patch %>
             <%= link_to "Decline Friend Request", friendship_path(id: another_user), method: :delete %>

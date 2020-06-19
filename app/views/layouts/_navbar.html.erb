@@ -6,7 +6,7 @@
   <% if user_signed_in? %>
     <div id="quick-links">
       <h3 class="qlinks">
-        <%= link_to "Notifications".pluralize(notifications.count) + "(#{notifications.count})", notifications_url %>
+        <%= link_to "Notification".pluralize(notifications.count) + "(#{notifications.count})", notifications_url %>
       </h3>
       <h3 class="qlinks">
         <%= link_to "All users", users_path %>
