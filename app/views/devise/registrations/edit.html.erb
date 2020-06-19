@@ -4,11 +4,17 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
+    <%= f.label :avatar %><br />
     <%= user_avatar(current_user, size=150) %>
   </div>
 
   <div class="field">
     <%= f.file_field :avatar, id: "choose-avatar" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :bio %><br />
+    <%= f.text_area :bio %>
   </div>
 
   <div class="field">

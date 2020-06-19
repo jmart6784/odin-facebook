@@ -34,6 +34,13 @@
 
 <h3>Joined: <%= time_ago_in_words(@user.created_at) %> ago</h3>
 
+<% if @user.bio %>
+  <h3>Bio:</h3>
+  <p><%= @user.bio %></p>
+<% else %>
+  <h3>No Bio</h3>
+<% end %>
+
 <% if @user.posts.exists? %>
   <table>
     <thead>
@@ -79,14 +86,14 @@
       <% end %>
     </tbody>
   </table>
-<% elsif current_user.id == @user.id %>
+<% elsif current_user.id == @user.id && @user.posts.count == 0 %>
   <p>You haven't posted anything</p>
   <p>Add a post <%= link_to "here", new_post_path %>.</p>
 <% else %>
   <p><%= @user.first_name + " " + @user.last_name + " hasn't posted yet." %></p>
 <% end %>
 
-<% if current_user.id == @user.id %>
+<% if current_user.id == @user.id && @user.posts.count > 1 %>
   <%= link_to "New Post", new_post_path %>
 <% end %>
 <br>

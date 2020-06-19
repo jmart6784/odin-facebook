@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships, dependent: :destroy
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
+  validates :bio, length: { maximum: 1300 }
 
   after_create :send_welcome_email
 
