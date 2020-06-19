@@ -1,7 +1,9 @@
 <h1>Post Index</h1>
+<%= link_to "New Post", new_post_path, id: "index-new-post-link" %>
 <table>
   <thead>
     <tr>
+      <th>Avatar</th>
       <th>User</th>
       <th>Title</th>
       <th>Content</th>
@@ -15,6 +17,9 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
+        <td>
+          <%= user_avatar(User.find(post.user_id), size=40) %>
+        </td>
         <td>
           <%= link_to User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name, User.find(post.user_id) %>
         </td>
@@ -43,19 +48,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "New Post", new_post_path, class: "test-link" %>
-<br>
-<%= link_to "All users", users_path, class: "test-link" %>
-<br>
-<%= link_to "Notifications", notifications_url, class: "test-link" %>
-<br>
-<%= link_to "Friend feed", friend_feed_path, class: "test-link" %>
-
-<% if notifications.empty? %>
-  <h3>Notifications empty</h3>
-<% else %>
-  <h3>
-    You have <%= notifications.count %> new <%= 'notification'.pluralize(notifications.count) %>!
-  </h3>
-<% end %>

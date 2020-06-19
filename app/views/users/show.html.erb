@@ -1,14 +1,26 @@
 <h1>User Show</h1>
 
+<%= user_avatar(@user, size=100) %>
+
 <h3><%= @user.first_name + " " + @user.last_name %></h3>
 
 <% if @user.friends.find_by(id: current_user) %>
   <% friendship = Friendship.where(user_id:@user).find_by(friend_id:current_user)  %>
-  <% if friendship.pending? %>
+
+
+  <% if current_user.friendships.find_by(friend_id: another_user).exists? %>
+    <h3>Request pending</h3>
+
+  <% elsif friendship.pending? %>
     <div>
       <%= link_to "Accept Friend Request", friendship_path, method: :patch %>
       <%= link_to "Decline Friend Request", friendship_path, method: :delete %>
     </div>
+
+
+
+
+
   <% else %>
     <div>
       <%= link_to "Unfriend", friendship_path, method: :delete %>
@@ -16,7 +28,7 @@
   <% end %>
 <% elsif @user != current_user %>
   <div>
-    <%= link_to 'Send Friend Request', friendships_path(friend_id:@user), method: :post %>
+    <%= link_to 'Send Friend Request', friendships_path(friend_id: @user), method: :post %>
   </div>
 <% end %>
 

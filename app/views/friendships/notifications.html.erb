@@ -7,6 +7,7 @@
 
     <% if friendship %>
       <div>
+        <%= user_avatar(User.find(notification.user_id), size=100) %>
         <h3>
           <%= link_to notification.user.first_name + " " + notification.user.last_name, User.find(notification.user_id) %>
           wants to be your friend

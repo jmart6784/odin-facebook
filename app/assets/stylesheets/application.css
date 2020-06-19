@@ -7,7 +7,7 @@ body {
   margin: 0px;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
+h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em {
   color: rgb(173, 173, 173);
 }
 
@@ -18,19 +18,44 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
   height: 10%;
   top: 0px;
   display: grid;
-  grid-template-columns: 1fr 0.20fr;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: rgb(15, 87, 77);
   padding: 10px;
   margin: 0px;
 }
 
 #navbar:hover {
-  opacity: 50%;
+  opacity: 80%;
 }
 
-#logged-status {
-  padding-right: 25px;
-  text-align: right;
+#nav-avatar {
+  margin: 0 auto;
+  padding: 0px;
+  border: 0px;
+}
+
+#quick-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+}
+
+.qlinks {
+  margin-top: 25px;
+}
+
+#profile-nav-links {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 0.6fr 0.5fr;
+  text-align: center;
+  align-items: center;
+}
+
+#status-and-pic {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 0.5fr 0.20fr;
 }
 
 #bg {
@@ -57,6 +82,11 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li {
 }
 
 /* Post index page */
-.test-link {
-  font-size: 50px;
+#index-new-post-link {
+  font-size: 30px;
+}
+
+/* Edit user */
+#choose-avatar {
+  color: rgb(173, 173, 173);
 }

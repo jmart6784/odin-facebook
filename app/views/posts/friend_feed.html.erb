@@ -4,6 +4,7 @@
 <table>
   <thead>
     <tr>
+      <th>Avatar</th>
       <th>User</th>
       <th>Title</th>
       <th>Content</th>
@@ -27,6 +28,9 @@
 
       <% post_ary.sort_by(&:created_at).reverse!.each do |friend_post| %>   
         <tr>
+          <td>
+            <%= user_avatar(User.find(friend_post.user_id), size=40) %>
+          </td>
           <td><%= link_to User.find_by(id: friend_post.user_id).first_name + " " + User.find_by(id: friend_post.user_id).last_name, User.find_by(id: friend_post.user_id) %></td>
           <td><%= link_to friend_post.title, friend_post %></td>
           <td><%= friend_post.body %></td>

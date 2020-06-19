@@ -23,6 +23,8 @@ class User < ApplicationRecord
       end
     end
   end
+
+  has_one_attached :avatar
       
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -30,7 +32,7 @@ class User < ApplicationRecord
   has_many :likes, as: :likeable, dependent: :destroy
 
   has_many :friendships, dependent: :destroy
-  has_many :friends, through: :friendships
+  has_many :friends, through: :friendships, dependent: :destroy
 
   validates :first_name, :last_name, presence: true, length: { minimum: 3 }
 

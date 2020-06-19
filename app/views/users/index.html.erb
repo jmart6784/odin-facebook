@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Avatar</th>
       <th>User</th>
       <th>Friendship status</th>
     </tr>
@@ -12,6 +13,9 @@
 
       <% next if current_user.id == another_user.id %>
       <tr>
+        <td>
+          <%= user_avatar(another_user, size=40) %>
+        </td>
         <td>
           <%= link_to another_user.first_name + " " + another_user.last_name, another_user %>
         </td>
