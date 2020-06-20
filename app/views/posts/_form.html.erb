@@ -16,5 +16,12 @@
   <%= f.label :body %><br>
   <%= f.text_area :body %><br>
 
+  <% if @post.image.attached? %>
+    <%= image_tag @post.image.variant(resize: '300x300!') %><br>
+  <% end %>
+
+  <%= f.label :image, "(Optional) Image formats: .jpg .jpeg .png" %><br>
+  <%= f.file_field :image, class: "choose-pic" %><br><br>
+
   <%= f.submit "Post" %>
 <% end %>

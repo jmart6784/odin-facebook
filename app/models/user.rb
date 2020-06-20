@@ -24,7 +24,8 @@ class User < ApplicationRecord
     end
   end
 
-  has_one_attached :avatar
+  has_one_attached :avatar, dependent: :destroy
+  validate :avatar_type
       
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -51,5 +52,11 @@ class User < ApplicationRecord
 
   def send_welcome_email
     UserMailer.welcome_email(self).deliver_now!
+  end
+
+  def avatar_type
+    if !avatar.content_type.in?(%('image/jpeg image/jpg image/png'))
+      errors.add(:avatar, "needs to be JPG or PNG")
+    end
   end
 end

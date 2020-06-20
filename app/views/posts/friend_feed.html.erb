@@ -13,6 +13,7 @@
       <th>Like button</th>
       <th>Posted at</th>
       <th>Edited at</th>
+      <th>Image(optional)</th>
     </tr>
   </thead>
     <tbody>
@@ -33,7 +34,13 @@
           </td>
           <td><%= link_to User.find_by(id: friend_post.user_id).first_name + " " + User.find_by(id: friend_post.user_id).last_name, User.find_by(id: friend_post.user_id) %></td>
           <td><%= link_to friend_post.title, friend_post %></td>
-          <td><%= friend_post.body %></td>
+          
+          <% unless friend_post.body.blank? %>
+            <td><%= friend_post.body %></td>
+          <% else %>
+            <td>NO OPTIONAL CONTENT</td>
+          <% end %>
+
           <td><%= friend_post.comments.count %></td>
           <td id=<%= "friend_feed_like_count#{friend_post.id}" %>><%= friend_post.likes.count %></td>
           <td>
@@ -47,6 +54,12 @@
           <% else %>
             <td><%= time_ago_in_words(friend_post.created_at, include_seconds: true)%> ago</td>
             <td>Edited <%= time_ago_in_words(friend_post.updated_at, include_seconds: true)%> ago</td>
+          <% end %>
+
+          <% if friend_post.image.attached? %>
+            <td><%= image_tag friend_post.image.variant(resize: '300x300!') %></td>
+          <% else %>
+            <td>No image</td>
           <% end %>
         </tr>
       <%end%>

@@ -1,5 +1,7 @@
 <h1>Show Post</h1>
 
+<%= user_avatar(@user, size=100) %>
+
 <h3>
   <strong>User: </strong>
   <%= link_to @user_name, User.find(@post.user_id) %>
@@ -13,6 +15,10 @@
   <strong>Content: </strong>
   <%= @post.body %>
 </p>
+<br>
+<% if @post.image.attached? %>
+  <%= image_tag @post.image.variant(resize: '300x300!') %><br>
+<% end %>
 
 <h2 id="like_count">
   <%= like_count_text %>

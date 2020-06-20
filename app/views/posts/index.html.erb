@@ -6,12 +6,13 @@
       <th>Avatar</th>
       <th>User</th>
       <th>Title</th>
-      <th>Content</th>
+      <th>Content(optional)</th>
       <th># of Comments</th>
       <th>Likes</th>
       <th>Like button</th>
       <th>Posted at</th>
       <th>Edited at</th>
+      <th>Image(optional)</th>
     </tr>
   </thead>
   <tbody>
@@ -24,7 +25,11 @@
           <%= link_to User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name, User.find(post.user_id) %>
         </td>
         <td><%= link_to post.title, post %></td>
-        <td><%= post.body %></td>
+        <% unless post.body.blank? %>
+          <td><%= post.body %></td>
+        <% else %>
+          <td>NO OPTIONAL CONTENT</td>
+        <% end %>
         <td><%= post.comments.count %></td>
         <td id=<%= "index_like_count#{post.id}" %>><%= post.likes.count %></td>
         <td>
@@ -38,6 +43,12 @@
         <% else %>
           <td><%= time_ago_in_words(post.created_at, include_seconds: true)%> ago</td>
           <td>Edited <%= time_ago_in_words(post.updated_at, include_seconds: true)%> ago</td>
+        <% end %>
+
+        <% if post.image.attached? %>
+          <td><%= image_tag post.image.variant(resize: '300x300!') %></td>
+        <% else %>
+          <td>No image</td>
         <% end %>
 
         <% if current_user.id == post.user_id %>
