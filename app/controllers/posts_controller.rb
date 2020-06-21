@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.all.order("created_at DESC").paginate(page: params[:page], per_page: 8)
+    @posts = Post.all.order("created_at DESC").paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -49,7 +49,18 @@ class PostsController < ApplicationController
   end
 
   def friend_feed
+    @post_ary = []
     @user_friends = current_user.friends
+
+    @user_friends.each do |friend|
+      next if Friendship.where(status: "pending", friend_id: friend.id).exists?
+
+      friend.posts.each do |unsorted_posts|
+        @post_ary << unsorted_posts
+      end
+    end
+
+    @paged_and_sorted = @post_ary.sort_by(&:created_at).reverse!.paginate(page: params[:page], per_page: 10)
   end
 
   private

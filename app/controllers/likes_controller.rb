@@ -35,7 +35,6 @@ class LikesController < ApplicationController
   end
 
   def user_show_likes_update
-    @user = User.find(params[:id])
     @post = Post.find(params[:post_id])
     like = Like.where(post_id: @post.id, user_id: current_user.id)
 

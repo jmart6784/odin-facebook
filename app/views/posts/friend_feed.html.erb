@@ -17,17 +17,7 @@
     </tr>
   </thead>
     <tbody>
-      <% post_ary = [] %>
-
-      <% @user_friends.each do |friend| %>
-        <% next if Friendship.where(status: "pending", friend_id: friend.id).exists? %>
-        
-        <% friend.posts.each do |unsorted_posts| %>
-           <% post_ary << unsorted_posts %>
-        <% end %>
-      <% end %>
-
-      <% post_ary.sort_by(&:created_at).reverse!.each do |friend_post| %>   
+      <% @paged_and_sorted.each do |friend_post| %>   
         <tr>
           <td>
             <%= user_avatar(User.find(friend_post.user_id), size=40) %>
@@ -65,7 +55,7 @@
       <%end%>
     </tbody>
   </table>
-
+  <%= will_paginate @paged_and_sorted, inner_window: 1, outer_window: 0 %>
 <% else %>
   <h3>NO FRIENDS ADDED</h3>
   <h4><%= link_to "Add friends", users_path %></h4>

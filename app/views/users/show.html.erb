@@ -42,7 +42,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @user.posts.order("created_at DESC").each do |post| %>
+      <% @users_posts.each do |post| %>
         <tr>
           <td><%= @user.first_name + " " + @user.last_name %></td>
           <td><%= link_to post.title, post %></td>
@@ -84,6 +84,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= will_paginate @users_posts, inner_window: 1, outer_window: 0 %>
 <% elsif current_user.id == @user.id && @user.posts.count == 0 %>
   <p>You haven't posted anything</p>
   <p>Add a post <%= link_to "here", new_post_path %>.</p>

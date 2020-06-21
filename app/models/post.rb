@@ -10,10 +10,6 @@ class Post < ApplicationRecord
   has_one_attached :image, dependent: :destroy
 
   validate :image_type, unless: ->(x) { x.image.blank? }
-
-  # def thumbnail
-  #   return self.image.variant(resize: '300x300!').processed
-  # end
   
   private
 
