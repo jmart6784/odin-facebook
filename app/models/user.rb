@@ -55,8 +55,12 @@ class User < ApplicationRecord
   end
 
   def avatar_type
-    if !avatar.content_type.in?(%('image/jpeg image/jpg image/png'))
-      errors.add(:avatar, "needs to be JPG or PNG")
+    if avatar.attached?
+      if !avatar.content_type.in?(%('image/jpeg image/jpg image/png'))
+        errors.add(:avatar, "needs to be JPG or PNG")
+      end
+    else
+      'default_profile.jpg'
     end
   end
 end
