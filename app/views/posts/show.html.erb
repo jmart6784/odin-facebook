@@ -47,11 +47,35 @@
 <%= link_to "All Posts", posts_path %>
 <br>
 <% unless @post.comments.count == 0 %>
-<h3>Comments (<%= @post.comments.count %>)</h3>
+  <h3>Comments (<%= @post.comments.count %>)</h3>
 <% else %>
   <h3>No comments</h3>
 <% end %>
 <br>
 
 <%= render partial: 'comments/form' %>
-<%= render partial: 'posts/comment', collection: @post.comments %>
+
+<% @post_comments.each do |comment| %>
+<div>
+  <%= user_avatar(User.find(comment.user_id), size=40) %>
+  <h4>
+    Comment by: <%= link_to User.find(comment.user_id).first_name + " " + User.find(comment.user_id).last_name, User.find(comment.user_id) %>
+  </h4>
+  <p class="comment"><%= comment.body %></p>
+
+  <% if comment.created_at == comment.updated_at %>
+    <h4>Posted <%= time_ago_in_words(comment.created_at, include_seconds: true)%> ago</h4>
+  <% else %>
+    <h4>Posted <%= time_ago_in_words(comment.created_at, include_seconds: true)%> ago</h4>
+    <h4>(Edited <%= time_ago_in_words(comment.updated_at, include_seconds: true)%> ago)</h4>
+  <% end %>
+
+  <br>
+  <% if current_user.id == comment.user_id %>
+    <%= link_to "Edit", edit_post_comment_path(@post.id, comment.id) %>
+    <%= link_to "Delete", post_comment_path(@post.id, comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
+  <% end %>
+</div>
+<% end %>
+
+<%= will_paginate @post_comments, inner_window: 1, outer_window: 0 %>

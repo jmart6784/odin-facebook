@@ -10,6 +10,7 @@ class PostsController < ApplicationController
     @comment = Comment.new
     @comment.post_id = @post.id
     @user_name = @user.first_name + " " + @user.last_name
+    @post_comments = @post.comments.order("created_at DESC").paginate(page: params[:page], per_page: 10)
   end
 
   def new
