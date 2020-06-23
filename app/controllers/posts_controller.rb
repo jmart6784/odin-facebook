@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:edit, :update, :destroy]
 
   def index
     @posts = Post.all.order("created_at DESC").paginate(page: params[:page], per_page: 10)
@@ -68,5 +69,11 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :body, :image)
+  end
+
+  def set_post
+    if Post.find(params[:id]).user != current_user
+      redirect_to posts_path
+    end
   end
 end

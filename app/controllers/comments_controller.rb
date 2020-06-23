@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: [:edit, :update, :destroy]
+
   def create
     @comment = Comment.new(comment_params)
     @comment.post_id = params[:post_id]
@@ -36,5 +38,11 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body, :user_id, :post_id)
+  end
+
+  def set_comment
+    if Comment.find(params[:id]).user_id != current_user.id
+      redirect_to posts_path
+    end
   end
 end

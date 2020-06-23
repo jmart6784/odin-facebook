@@ -10,7 +10,7 @@ class FriendshipsController < ApplicationController
   end
 
   def update
-    @friendship = Friendship.where(user_id:params[:id]).where(friend_id:current_user).first
+    @friendship = Friendship.where(user_id: params[:id]).where(friend_id: current_user.id).first
     if @friendship.confirmed!
       current_user.friendships.find_or_initialize_by(:friend_id => params[:id]).confirmed!
     end
@@ -19,7 +19,7 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    @friendship = Friendship.where(user_id:params[:id]).where(friend_id:current_user).first
+    @friendship = Friendship.where(user_id: params[:id]).where(friend_id: current_user.id).first
     
     @friendship.destroy
 
