@@ -1,63 +1,94 @@
-<h1>Post Index</h1>
-<%= link_to "New Post", new_post_path, id: "index-new-post-link" %>
-<table>
-  <thead>
-    <tr>
-      <th>Avatar</th>
-      <th>User</th>
-      <th>Title</th>
-      <th>Content(optional)</th>
-      <th># of Comments</th>
-      <th>Likes</th>
-      <th>Like button</th>
-      <th>Posted at</th>
-      <th>Edited at</th>
-      <th>Image(optional)</th>
-    </tr>
-  </thead>
-  <tbody>
+<div id="index-grid-div">
+  <% unless Post.count == 0 %>
     <% @posts.each do |post| %>
-      <tr>
-        <td>
-          <%= user_avatar(User.find(post.user_id), size=40) %>
-        </td>
-        <td>
-          <%= link_to User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name, User.find(post.user_id) %>
-        </td>
-        <td><%= link_to post.title, post %></td>
-        <% unless post.body.blank? %>
-          <td><%= post.body %></td>
-        <% else %>
-          <td>NO OPTIONAL CONTENT</td>
-        <% end %>
-        <td><%= post.comments.count %></td>
-        <td id=<%= "index_like_count#{post.id}" %>><%= post.likes.count %></td>
-        <td>
-          <% @index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
+      <div class="index-post-container">
 
-          <%= link_to @index_like_exists, index_likes_update_like_path(id: post.id), method: :put, remote: true, id: "post_index_#{post.id}" %>
-        </td>
-        <% if post.created_at == post.updated_at %>
-          <td><%= time_ago_in_words(post.created_at, include_seconds: true)%> ago</td>
-          <td>No edit</td>
-        <% else %>
-          <td><%= time_ago_in_words(post.created_at, include_seconds: true)%> ago</td>
-          <td>Edited <%= time_ago_in_words(post.updated_at, include_seconds: true)%> ago</td>
+        <div class="index-user-info">
+          <div></div>
+
+          <%= link_to User.find(post.user_id) do %>
+            <div class="index-avatar">
+              <%= user_avatar(User.find(post.user_id), size=40) %>
+            </div>
+          <% end %>
+
+          <%= link_to User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name, User.find(post.user_id), class: "index-linkto-user" %>
+
+          <% if current_user.id == post.user_id %>
+            <div class="index-owner-options">
+              <img src="/images/dots.png" width="40" height="40">
+              
+              <div class="index-dropdown-content">
+
+                <%= link_to edit_post_path(post), class: "index-drp-link" do %>
+                  <div class="index-drp-item">
+                    <p class="index-opt-txt">Edit</p>
+                  </div>
+                <% end %>
+
+                <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, class: "index-drp-link" do %>
+                  <div id="index-delete-item" class="index-drp-item">
+                    <p class="index-opt-txt">Delete</p>
+                  </div>
+                <% end %>
+
+              </div>
+
+            </div>
+          <% else %>
+            <div></div>
+          <% end %>
+        </div>
+
+        <%= link_to post, class: "index-post-link" do %>
+          <% if post.created_at == post.updated_at %>
+            <p class="index-time"><%= post.created_at.strftime("%b %e %Y") %></p>
+          <% else %>
+            <p class="index-time">
+              <%= post.created_at.strftime("%b %e %Y") %> (Edited <%= time_ago_in_words(post.updated_at, include_seconds: true)%> ago)
+            </p>
+          <% end %>
+
+          <div>
+            <h3 id="index-post-title"><%= post.title %></h3>
+          </div>
+
+          <div id="index-body-div">
+            <p class="index-post-body"><%= post.body %></p>
+          </div>
+          <% if post.image.attached? %>
+            <%= image_tag post.image.variant(resize: '500x500!') %>
+          <% end %>
         <% end %>
 
-        <% if post.image.attached? %>
-          <td><%= image_tag post.image.variant(resize: '300x300!') %></td>
-        <% else %>
-          <td>No image</td>
-        <% end %>
+        <div class="index-post-div-footer">
+          <p>
+            <% @index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
 
-        <% if current_user.id == post.user_id %>
-          <td><%= link_to "Edit", edit_post_path(post) %></td>
-          <td><%= link_to "Delete", post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+            <%= link_to index_likes_update_like_path(id: post.id), method: :put, remote: true do %>
+
+              <img src="/images/<%= @index_like_exists %>.png" width="50" height="50", id="post_index_<%= post.id %>">
+
+            <% end %>
+
+          </p>
+
+          <div class="index-like-count">
+            <p id=<%= "index_like_count#{post.id}" %>>
+              <%= "#{post.likes.count} Like".pluralize(post.likes.count) %>
+            </p>
+          </div>
+
+          <p class="index-comment-count">
+            <%= link_to "Comments(" + post.comments.count.to_s + ")", post, class: "index-post-link" %>
+          </p>
+        </div>
+
+      </div>
     <% end %>
-  </tbody>
-</table>
+  <% else %>
+    <h2>No posts yet...</h2>
+  <% end %>
+</div>
 
 <%= will_paginate @posts, inner_window: 1, outer_window: 0 %>

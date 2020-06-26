@@ -18,7 +18,6 @@ require("channels")
 // Hide flash messages
 window.setTimeout(function() {
   let style = document.createElement('style');
-
   style.innerHTML =
     '.notice {' +
       'display: none;' +

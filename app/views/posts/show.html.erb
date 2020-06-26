@@ -57,7 +57,6 @@
 
 <% @post_comments.each do |comment| %>
 <div>
-  <h1><%= comment.id %></h1>
   <%= user_avatar(User.find(comment.user_id), size=40) %>
   <h4>
     Comment by: <%= link_to User.find(comment.user_id).first_name + " " + User.find(comment.user_id).last_name, User.find(comment.user_id) %>

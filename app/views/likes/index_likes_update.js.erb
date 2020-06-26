@@ -2,8 +2,10 @@
 
 <% index_like_exists = Like.where(post_id: @post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
 
-document.getElementById("post_index_<%= @post.id %>").textContent = "<%= index_like_exists %>";
+document.getElementById("post_index_<%= @post.id %>").src = "/images/<%= index_like_exists %>.png";
 
 <% index_like_count = @post.likes.count %>
 
-document.getElementById("index_like_count<%= @post.id %>").textContent = "<%= index_like_count %>";
+<% plur_likes = "Like".pluralize(index_like_count) %>
+
+document.getElementById("index_like_count<%= @post.id %>").textContent = "<%= index_like_count %> <%= plur_likes %>";

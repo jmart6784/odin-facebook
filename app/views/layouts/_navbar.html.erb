@@ -1,41 +1,67 @@
 <div id="navbar">
   <a href=<%= posts_path %>>
-    <img src="/images/logo.png" width="300" height="80">
+    <img src="/images/logo.png" width="220" height="60">
   </a>
 
   <% if user_signed_in? %>
     <div id="quick-links">
+
+      <%= link_to new_post_path, id: "np-link-do" do %>
+        <div id="nav-new-post">
+          <img src="/images/plus.png" width="20" height="20" id="plus-pic">
+          <h3 id="nav-post-link">New Post</h3>
+        </div>
+      <% end %>
+
       <h3 class="qlinks">
-        <%= link_to "Notification".pluralize(notifications.count) + "(#{notifications.count})", notifications_url %>
+        <%= link_to "Friends feed", friend_feed_path %>
       </h3>
-      <h3 class="qlinks">
-        <%= link_to "All users", users_path %>
-      </h3>
+
       <h3 class="qlinks">
         <%= link_to "Global feed", posts_path %>
       </h3>
+
       <h3 class="qlinks">
-        <%= link_to "Friend feed", friend_feed_path %>
+        <%= link_to "Find Friends", users_path %>
       </h3>
-      <h3 class="qlinks">
-        <%= link_to "New Post", new_post_path %>
-      </h3>
-      <h3 class="qlinks">
-        <%= link_to "Edit Account", edit_user_registration_path %>
-      </h3>
+
+      <div id="noti-drp-dwn">
+        <% if notifications.count == 0 %>
+          <img src="/images/empty-bell.png" width="29" height="35">
+        <% else %>
+          <img src="/images/filled-bell.png" width="29" height="35">
+        <% end %>
+
+        <div id="noti-content">
+          <%= link_to "Friend " + "request".pluralize(notifications.count) + "(#{notifications.count})", notifications_url, class: "noti-link" %>
+        </div>
+      </div>
     </div>
 
     <div id="profile-nav-links">
+
       <div></div>
 
-      <h3 id="logged-as">Logged in as: 
-        <%= link_to current_user.first_name + " " + current_user.last_name, User.find(current_user.id) %>
-      </h3>
-      <h3>
-        <%= link_to "Log Out", destroy_user_session_path, method: :delete, id: "logout-link" %>
-      </h3>
+      <div id="nav-user-div">
+        <div id="user-drp-dwn">
+
+          <div id="nav-pro-pic">
+            <%= user_avatar(current_user, size=40) %>
+          </div>
+
+          <div id="logged-as">
+            <%= link_to current_user.first_name, current_user, id: "nav-user-name" %>
+          </div>
+        </div>
+
+        <div id="user-drp-dwn-content">
+          <%= link_to "My profile", current_user, class: "user-drp-links"  %>
+          <%= link_to "Settings", edit_user_registration_path, class: "user-drp-links" %>
+          <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "user-drp-links" %>
+        </div>
+      </div>
+
+     
     </div>
-  <% else %>
-    <a href=<%= new_user_session_url %>>Log in</a>
   <% end %>
 </div>

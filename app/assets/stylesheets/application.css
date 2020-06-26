@@ -7,25 +7,22 @@ body {
   margin: 0px;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span {
+h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span, div {
   color: rgb(173, 173, 173);
 }
 
 /* Nav bar */
 #navbar {
   position: fixed;
+  z-index: 10;
   width: 100%;
-  height: 10%;
+  height: 7%;
   top: 0px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: rgb(15, 87, 77);
   padding: 10px;
   margin: 0px;
-}
-
-#navbar:hover {
-  opacity: 80%;
 }
 
 #nav-avatar {
@@ -36,30 +33,162 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span {
 
 #quick-links {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   text-align: center;
 }
 
 .qlinks {
-  margin-top: 25px;
+  margin: 0px;
+  padding-top: 20px;
+}
+
+.qlinks:hover {
+  background: rgb(0, 116, 102);
+  color: white;
+}
+
+.qlinks a {
+  text-decoration: none;
+}
+
+#nav-new-post {
+  display: grid;
+  grid-template-columns: 0.1fr 1fr;
+}
+
+#plus-pic {
+  margin-top: 22px;
+  padding-left: 10px;
+}
+
+#nav-post-link {
+  margin-top: 20px;
+  margin-left: 5px;
+  text-align: left;
+  text-decoration: none;
+}
+
+#np-link-do {
+  text-decoration: none;
+}
+
+#np-link-do:hover {
+  background: rgb(0, 116, 102);
+  color: white;
 }
 
 #profile-nav-links {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 0.6fr 0.5fr;
-  text-align: center;
+  grid-template-columns: 2.5fr 1fr;
+  text-align: left;
   align-items: center;
 }
 
-#status-and-pic {
-  text-align: center;
+#nav-user-div {
+  position: relative;
+  display: inline-block;
+}
+
+#user-drp-dwn {
   display: grid;
-  grid-template-columns: 0.5fr 0.20fr;
+  grid-template-columns: 0.25fr 1fr;
+}
+
+#user-drp-dwn:hover {
+  background-color: rgb(30, 136, 122);
+}
+
+#user-drp-dwn-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(11, 51, 46);
+  min-width: 165px;
+  z-index: 2;
+}
+
+.user-drp-links {
+  font-size: 25px;
+  padding: 10px;
+}
+
+.user-drp-links:hover {
+  color: white;
+}
+
+#user-drp-dwn-content a {
+  text-decoration: none;
+  display: block;
+}
+
+#nav-user-div:hover #user-drp-dwn-content {
+  display: block;
+}
+
+#user-drp-dwn-content a:hover {
+  background-color: rgb(30, 136, 122);
+}
+
+#nav-pro-pic {
+  margin-top: 9px;
+  align-items: flex-end;
+  margin-left: 10px;
+}
+
+#nav-pro-pic img {
+  display: block;
+  margin-left: auto;
+  padding-right: 5px;
+}
+
+#logged-as {
+  margin-top: 7px;
+  padding: 5px;
+}
+
+#nav-user-name {
+  font-size: 27px;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+#noti-drp-dwn {
+  position: relative;
+  display: inline-block;
+  margin-top: 19px;
+}
+
+#noti-drp-dwn:hover #noti-content {
+  display: block;
+}
+
+#noti-content {
+  display: none;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+  background-color: rgb(11, 51, 46);
+  border: 1px solid rgb(107, 194, 168);
+}
+
+#noti-content a {
+  text-decoration: none;
+  display: block;
+}
+
+#noti-content a:hover {
+  background-color: rgb(22, 102, 93);
+  color: white;
+}
+
+.noti-link {
+  color: white;
+  padding: 10px;
+  font-size: 20px;
 }
 
 #bg {
-  margin-top: 115px;
+  margin-top: 86px;
 }
 
 /* Notice (flash) */
@@ -82,8 +211,135 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span {
 }
 
 /* Post index page */
-#index-new-post-link {
-  font-size: 30px;
+#index-grid-div {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-top: 70px;
+}
+
+.index-post-container {
+  background-color: rgb(11, 51, 46);
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 0px;
+  margin-bottom: 40px;
+  height: fit-content;
+}
+
+.index-user-info {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 0.1fr 0.3fr 2fr 0.4fr;
+  background-color: rgb(15, 87, 77);
+  padding: 5px;
+}
+
+.index-avatar {
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  margin-top: 7px;
+}
+
+.index-linkto-user {
+  text-decoration: none;
+  font-size: 20px;
+  margin-top: 14px;
+}
+
+.index-owner-options {
+  margin-top: 7px;
+  position: relative;
+  display: inline-block;
+}
+
+.index-dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 53px;
+  z-index: 1;
+}
+
+.index-dropdown-content img {
+  display: block;
+}
+
+.index-owner-options:hover .index-dropdown-content {
+  display: block;
+}
+
+.index-drp-item {
+  margin: 0px;
+  width: 100%;
+  background-color: rgb(29, 92, 76);
+  border: 0.5px solid rgb(120, 206, 184);
+  display: grid;
+  grid-template-columns: 0.35fr 1fr;
+  text-align: center;
+}
+
+.index-drp-item:hover {
+  background-color: rgb(19, 73, 60);
+}
+
+.index-drp-link {
+  text-decoration: none;
+  padding: 0px;
+}
+
+.index-time {
+  margin: 0px;
+  margin-top: 7px;
+  margin-left: 15px;
+  text-align: left;
+}
+
+#index-post-title {
+  text-align: left;
+  font-size: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-decoration: none;
+}
+
+#index-body-div {
+  text-align: left;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.index-opt-txt {
+  margin-left: 5px;
+  font-size: 15px;
+}
+
+#index-delete-item:hover {
+  background-color: rgb(105, 18, 18);
+}
+
+.index-post-body {
+  text-decoration: none;
+}
+
+.index-post-link {
+  text-decoration: none;
+}
+
+.index-post-div-footer {
+  display: grid;
+  grid-template-columns: 0.35fr 1fr 1fr;
+  background-color: rgb(15, 87, 77);
+
+}
+
+.index-like-count {
+  font-size: 25px;
+  text-align: left;
+}
+
+.index-comment-count {
+  font-size: 25px;
 }
 
 /* Edit user */

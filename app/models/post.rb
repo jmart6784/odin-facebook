@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :image, presence: true, unless: :body?
   validates :title, length: { maximum: 250 }
-  validates :body, length: { maximum: 6000 }
+  validates :body, length: { maximum: 5000 }
   has_one_attached :image, dependent: :destroy
 
   validate :image_type, unless: ->(x) { x.image.blank? }
