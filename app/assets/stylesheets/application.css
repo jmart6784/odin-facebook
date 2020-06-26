@@ -342,6 +342,79 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span, div {
   font-size: 25px;
 }
 
+.paginate-pages-div {
+  text-align: center;
+  font-size: 30px;
+  border: 1px solid blue;
+  height: fit-content;
+}
+
+/* Will_paginate */
+
+.pagination a {
+  padding: 15px;
+  background-color: rgb(15, 87, 77);
+  border-radius: 10px;
+  text-decoration: none;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.pagination a:hover {
+  border: 2px solid white;
+  background-color: rgb(11, 51, 46);
+}
+
+.current {
+  border: 2px solid white;
+  padding: 15px;
+  background-color: rgb(11, 51, 46);
+  border-radius: 10px;
+  text-decoration: none;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.next_page {
+  margin-left: 10px;
+  padding: 15px;
+  background-color: rgb(15, 87, 77);
+  border-radius: 10px;
+  text-decoration: none;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.next_page:hover {
+  background-color: rgb(11, 51, 46);
+  color: white;
+  border: 2px solid white;
+}
+
+.previous_page {
+  margin-right: 10px;
+  padding: 15px;
+  background-color: rgb(15, 87, 77);
+  border-radius: 10px;
+  text-decoration: none;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.previous_page:hover {
+  background-color: rgb(11, 51, 46);
+  color: white;
+  border: 2px solid white;
+}
+
+.next_page.disabled {
+  display: none;
+}
+
+.previous_page.disabled {
+  display: none;
+}
+
 /* Edit user */
 .choose-pic {
   color: rgb(173, 173, 173);
