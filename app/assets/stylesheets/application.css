@@ -11,6 +11,10 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span, div {
   color: rgb(173, 173, 173);
 }
 
+#bg {
+  margin-top: 86px;
+}
+
 /* Nav bar */
 #navbar {
   position: fixed;
@@ -185,10 +189,6 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span, div {
   color: white;
   padding: 10px;
   font-size: 20px;
-}
-
-#bg {
-  margin-top: 86px;
 }
 
 /* Notice (flash) */
@@ -413,6 +413,113 @@ h1, h2, h3, h4, h5, h6, p, a, th, tr, label, li, i, em, span, div {
 
 .previous_page.disabled {
   display: none;
+}
+
+/* post _form page */
+#new-post-form-div {
+  text-align: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+#new-post-errors {
+  border: 5px solid rgb(129, 61, 61);
+  background-color: rgb(112, 0, 0);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#post-error-list {
+  list-style: none;
+}
+
+#flash-post-danger {
+  font-size: 20px;
+}
+
+.post-errors {
+  font-size: 15px;
+  color: white;
+}
+
+#new-post-form {
+  background-color: rgb(11, 51, 46);
+}
+
+#new-post-title-field {
+  width: 80%;
+  height: 50px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  background-color: rgb(5, 24, 22);
+  border: 3px solid rgb(5, 24, 22);
+  color: white;
+  padding: 20px;
+  font-size: 25px;
+}
+
+#new-post-title-field:hover {
+  border: 3px solid white;
+}
+
+#new-post-body-field {
+  width: 80%;
+  height: 150px;
+  background-color: rgb(5, 24, 22);
+  border: 3px solid rgb(5, 24, 22);
+  color: white;
+  padding: 20px;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+#new-post-body-field:hover {
+  border: 3px solid white;
+}
+
+#post-new-img-div {
+  border: 3px solid rgb(5, 24, 22);
+  background-color: rgb(5, 24, 22);
+  margin: 0 auto;
+  margin-bottom: 30px;
+  width: 80%;
+  padding: 20px;
+}
+
+#post-new-img-div:hover #post-image-field {
+  border: 3px solid white;
+}
+
+#post-image-field {
+  background-color: rgb(5, 24, 22);
+  border: 3px solid rgb(5, 24, 22);
+  padding: 10px;
+}
+
+#post-submit {
+  width: 100%;
+  font-size: 30px;
+  border: 3px solid rgb(5, 24, 22);
+  background-color: rgb(5, 24, 22);
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#post-submit:hover {
+  border: 3px solid white;
+}
+
+.form-post-title {
+  background-color: rgb(5, 24, 22);
+  border: 3px solid rgb(11, 51, 46);
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 120px;
+  margin-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 60%;
 }
 
 /* Edit user */

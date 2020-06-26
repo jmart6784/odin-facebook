@@ -1,27 +1,31 @@
-<% if @post.errors.any? %>
-  <div>
-    <p><%= flash[:danger] %></p>
-    <ul>
-      <% @post.errors.full_messages.each do |msg| %>
-        <li><span><%= msg %></span></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= form_with model: @post, local: true do |f| %>
-  <%= f.label :title %><br>
-  <%= f.text_field :title %><br>
-
-  <%= f.label :body %><br>
-  <%= f.text_area :body %><br>
-
-  <% if @post.image.attached? %>
-    <%= image_tag @post.image.variant(resize: '300x300!') %><br>
+<div id="new-post-form-div">
+  <% if @post.errors.any? %>
+    <div id="new-post-errors">
+      <p id="flash-post-danger"><%= flash[:danger] %></p>
+      <ul id="post-error-list">
+        <% @post.errors.full_messages.each do |msg| %>
+          <li class="post-errors"><span><%= msg %></span></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 
-  <%= f.label :image, "(Optional) Image formats: .jpg .jpeg .png" %><br>
-  <%= f.file_field :image, class: "choose-pic" %><br><br>
+  <div id="new-post-form">
+    <%= form_with model: @post, local: true do |f| %>
+      <%= f.text_field :title, id: "new-post-title-field", placeholder: "Title(required)" %><br>
 
-  <%= f.submit "Post" %>
-<% end %>
+      <%= f.text_area :body, id: "new-post-body-field", placeholder: "Body(optional if posting a photo)" %><br>
+
+      <% if @post.image.attached? %>
+        <%= image_tag @post.image.variant(resize: '300x300!') %><br>
+      <% end %>
+
+      <div id="post-new-img-div">
+        <%= f.label :image, "Image(optional if body is filled out)" %><br>
+        <%= f.file_field :image, class: "choose-pic", id: "post-image-field" %>
+      </div>
+
+      <%= f.submit "Share", id: "post-submit" %>
+    <% end %>
+  </div>
+</div>
