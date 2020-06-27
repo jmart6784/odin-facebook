@@ -19,7 +19,6 @@ Rails.application.routes.draw do
     member do
       put :index_likes_update
       put :user_show_likes_update
-      put :friend_feed_likes_update
     end
   end
 

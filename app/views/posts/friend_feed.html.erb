@@ -1,3 +1,127 @@
+<% unless @user_friends.count == 0 %>
+
+  <% @paged_and_sorted.each do |friend_post| %>
+
+  <div id="index-grid-div">
+    <% unless Post.count == 0 %>
+      <div class="index-post-container">
+
+        <div class="index-user-info">
+          <div></div>
+
+          <%= link_to User.find(friend_post.user_id) do %>
+            <div class="index-avatar">
+              <%= user_avatar(User.find(friend_post.user_id), size=40) %>
+            </div>
+          <% end %>
+
+          <%= link_to User.find(friend_post.user_id).first_name + " " + User.find(friend_post.user_id).last_name, User.find(friend_post.user_id), class: "index-linkto-user" %>
+
+          <% if current_user.id == friend_post.user_id %>
+            <div class="index-owner-options">
+              <img src="/images/dots.png" width="40" height="40">
+              
+              <div class="index-dropdown-content">
+
+                <%= link_to edit_post_path(friend_post), class: "index-drp-link" do %>
+                  <div class="index-drp-item">
+                    <p class="index-opt-txt">Edit</p>
+                  </div>
+                <% end %>
+
+                <%= link_to friend_post, method: :delete, data: { confirm: 'Are you sure?' }, class: "index-drp-link" do %>
+                  <div id="index-delete-item" class="index-drp-item">
+                    <p class="index-opt-txt">Delete</p>
+                  </div>
+                <% end %>
+
+              </div>
+
+            </div>
+          <% else %>
+            <div></div>
+          <% end %>
+        </div>
+
+        <%= link_to friend_post, class: "index-post-link" do %>
+          <% if friend_post.created_at == friend_post.updated_at %>
+            <p class="index-time"><%= friend_post.created_at.strftime("%b %e %Y") %></p>
+          <% else %>
+            <p class="index-time">
+              <%= friend_post.created_at.strftime("%b %e %Y") %> (Edited <%= time_ago_in_words(friend_post.updated_at, include_seconds: true)%> ago)
+            </p>
+          <% end %>
+
+          <div>
+            <h3 id="index-post-title"><%= friend_post.title %></h3>
+          </div>
+
+          <div id="index-body-div">
+            <p class="index-post-body"><%= friend_post.body %></p>
+          </div>
+          <% if friend_post.image.attached? %>
+            <%= image_tag friend_post.image.variant(resize: '500x500!') %>
+          <% end %>
+        <% end %>
+
+        <div class="index-post-div-footer">
+          <p>
+            <% @index_like_exists = Like.where(post_id: friend_post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
+
+            <%= link_to index_likes_update_like_path(id: friend_post.id), method: :put, remote: true do %>
+
+              <img src="/images/<%= @index_like_exists %>.png" width="50" height="50", id="post_index_<%= friend_post.id %>">
+
+            <% end %>
+
+          </p>
+
+          <div class="index-like-count">
+            <p id=<%= "index_like_count#{friend_post.id}" %>>
+              <%= "#{friend_post.likes.count} Like".pluralize(friend_post.likes.count) %>
+            </p>
+          </div>
+
+          <p class="index-comment-count">
+            <%= link_to "Comments(" + friend_post.comments.count.to_s + ")", friend_post, class: "index-post-link" %>
+          </p>
+        </div>
+
+      </div>
+
+
+    <% else %>
+      <h2>No posts yet...</h2>
+    <% end %>
+  </div>
+
+  <% end %>
+<% else %>
+  <h3>NO FRIENDS ADDED</h3>
+  <h4><%= link_to "Add friends", users_path %></h4>
+<% end %>
+
+<div class="paginate-pages-div">
+  <%= will_paginate @paged_and_sorted, inner_window: 1, outer_window: 0, :previous_label => '◀', :next_label => '▶' %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% if false %>
+
+
 <h1>Friends Feed</h1>
 <% unless @user_friends.count == 0 %>
 
@@ -59,4 +183,7 @@
 <% else %>
   <h3>NO FRIENDS ADDED</h3>
   <h4><%= link_to "Add friends", users_path %></h4>
+<% end %>
+
+
 <% end %>
