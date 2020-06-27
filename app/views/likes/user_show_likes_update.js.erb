@@ -1,9 +1,0 @@
-<% @user_post = Post.find(params[:post_id]) %>
-
-<% user_show_like_exists = Like.where(post_id: @user_post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
-
-document.getElementById("user_index_<%= @user_post.id %>").textContent = "<%= user_show_like_exists %>";
-
-<% user_show_like_count = @user_post.likes.count %>
-
-document.getElementById("user_show_like_count<%= @user_post.id %>").textContent = "<%= user_show_like_count %>";

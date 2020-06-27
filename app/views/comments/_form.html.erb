@@ -3,7 +3,7 @@
 
   <%= form_for [ @post, @comment ] do |f| %>
 
-    <%= f.text_area :body, id: "comment-field" %>
+    <%= f.text_area :body, id: "comment-field", placeholder: "Share your thoughts..." %>
     <br>
     <%= f.submit "Comment", id: "comment-submit" %>
 
