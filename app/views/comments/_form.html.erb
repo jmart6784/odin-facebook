@@ -1,11 +1,11 @@
-<h3>Post a Comment</h3>
+<div id="comment-form">
+  <h3 id="post-comment-title">Post a Comment</h3>
 
-<%= form_for [ @post, @comment ] do |f| %>
-  <p>
-    <%= f.label :body %><br/>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit "Comment" %>
-  </p>
-<% end %>
+  <%= form_for [ @post, @comment ] do |f| %>
+
+    <%= f.text_area :body, id: "comment-field" %>
+    <br>
+    <%= f.submit "Comment", id: "comment-submit" %>
+
+  <% end %>
+</div>
