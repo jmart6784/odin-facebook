@@ -13,12 +13,13 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :friend_request, :befriend, :notifications, :get_all_friends]
 
+  get '/friend_list', to: 'users#friend_list', as: 'friend_list'
+
   resources :friendships, only: [:create, :update, :destroy]
 
   resources :likes, only: [:update] do
     member do
       put :index_likes_update
-      put :user_show_likes_update
     end
   end
 

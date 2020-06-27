@@ -1,3 +1,187 @@
+<% total_likes = [] %>
+
+<% @user.posts.each do |post| %>
+  <% total_likes << post.likes.count %>
+<% end %>
+
+<div id="u-show-container">
+
+  <div id="u-show-header">
+
+    <div id="u-info-0">
+
+      <div id="u-show-avatar"><%= user_avatar(@user, size=170) %></div>
+
+      <div id="u-info-1">
+        <h1 id="u-show-name" class="u-info-marg">
+          <%= @user.first_name + " " + @user.last_name %>
+        </h1>
+
+        <h3 class="u-info-marg">
+          Joined: <%= time_ago_in_words(@user.created_at) %> ago
+        </h3>
+
+        <h3 id="u-total-likes" class="u-info-marg">
+          Total likes(<%= total_likes.map(&:to_i).reduce(0, :+) %>)
+        </h3>
+
+        <%= link_to friend_list_path, id: "u-show-frd-link" do %>
+          <h3 id="u-friend-count" class="u-info-marg">
+            <%= "Friends(#{@user.friends.count})" %>
+          </h3>
+        <% end %>
+      </div>
+
+    </div>
+
+    <div id="u-bio-div">
+      <% if @user.bio %>
+        <p id="bio-title">Bio</p>
+        <p id="u-bio"><%= @user.bio %></p>
+        <%= link_to "Edit Bio", edit_user_registration_path, id: "u-edit" if current_user == @user %>
+      <% end %>
+    </div>
+
+    <div id="u-show-friend-status">
+      <% unless current_user == @user %>
+        <% if friendship = current_user.friendships.find_by(friend_id: @user.id)%>
+          <% if friendship.pending? %>
+            <h3 id="u-show-pending">Request Pending</h3>
+          <% else %>
+            <%= link_to "Unfriend", friendship_path(id: @user.id), method: :delete, id: "u-show-unfriend" %>
+          <% end %>
+        <% elsif friendship = @user.friendships.find_by(friend_id: current_user)%>
+          <div id="u-show-req-opt">
+            <%= link_to "Accept Friend Request", friendship_path(id: @user.id), method: :patch, id: "u-show-accept" %>
+            <%= link_to "Decline Friend Request", friendship_path(id: @user.id), method: :delete, id: "u-show-decline" %>
+          </div>
+        <% else %>
+          <%= link_to "+Add Friend", friendships_path(friend_id: @user.id), method: :post, id: "u-show-fr" %>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div id="u-show-posts-div">
+    <% if @user.posts.exists? %>
+
+      <div id="index-grid-div">
+      <% unless Post.count == 0 %>
+        <% @users_posts.each do |post| %>
+          <div class="index-post-container">
+
+            <div class="index-user-info">
+              <div></div>
+
+              <%= link_to User.find(post.user_id) do %>
+                <div class="index-avatar">
+                  <%= user_avatar(User.find(post.user_id), size=40) %>
+                </div>
+              <% end %>
+
+              <%= link_to User.find(post.user_id).first_name + " " + User.find(post.user_id).last_name, User.find(post.user_id), class: "index-linkto-user" %>
+
+              <% if current_user.id == post.user_id %>
+                <div class="index-owner-options">
+                  <img src="/images/dots.png" width="40" height="40">
+                  
+                  <div class="index-dropdown-content">
+
+                    <%= link_to edit_post_path(post), class: "index-drp-link" do %>
+                      <div class="index-drp-item">
+                        <p class="index-opt-txt">Edit</p>
+                      </div>
+                    <% end %>
+
+                    <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' }, class: "index-drp-link" do %>
+                      <div id="index-delete-item" class="index-drp-item">
+                        <p class="index-opt-txt">Delete</p>
+                      </div>
+                    <% end %>
+
+                  </div>
+
+                </div>
+              <% else %>
+                <div></div>
+              <% end %>
+            </div>
+
+            <%= link_to post, class: "index-post-link" do %>
+              <% if post.created_at == post.updated_at %>
+                <p class="index-time"><%= post.created_at.strftime("%b %e %Y") %></p>
+              <% else %>
+                <p class="index-time">
+                  <%= post.created_at.strftime("%b %e %Y") %> (Edited <%= time_ago_in_words(post.updated_at, include_seconds: true)%> ago)
+                </p>
+              <% end %>
+
+              <div>
+                <h3 id="index-post-title"><%= post.title %></h3>
+              </div>
+
+              <div id="index-body-div">
+                <p class="index-post-body"><%= post.body %></p>
+              </div>
+              <% if post.image.attached? %>
+                <%= image_tag post.image.variant(resize: '500x500!') %>
+              <% end %>
+            <% end %>
+
+            <div class="index-post-div-footer">
+              <p>
+                <% @index_like_exists = Like.where(post_id: post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
+
+                <%= link_to index_likes_update_like_path(id: post.id), method: :put, remote: true do %>
+
+                  <img src="/images/<%= @index_like_exists %>.png" width="50" height="50", id="post_index_<%= post.id %>">
+
+                <% end %>
+
+              </p>
+
+              <div class="index-like-count">
+                <p id=<%= "index_like_count#{post.id}" %>>
+                  <%= "#{post.likes.count} Like".pluralize(post.likes.count) %>
+                </p>
+              </div>
+
+              <p class="index-comment-count">
+                <%= link_to "Comments(" + post.comments.count.to_s + ")", post, class: "index-post-link" %>
+              </p>
+            </div>
+
+          </div>
+        <% end %>
+      <% else %>
+        <h2>No posts yet...</h2>
+      <% end %>
+    </div>
+
+    <div class="paginate-pages-div">
+      <%= will_paginate @users_posts, inner_window: 1, outer_window: 0, :previous_label => '◀', :next_label => '▶' %>
+    </div>
+
+
+    <% elsif current_user.id == @user.id && @user.posts.count == 0 %>
+      <p class="u-no-posts glow">You haven't posted anything</p>
+      <p class="u-no-posts">Add a post <%= link_to "here", new_post_path %>.</p>
+    <% else %>
+      <p id="no-posts-au"><%= @user.first_name + " " + @user.last_name + " hasn't posted yet" %></p>
+    <% end %>
+  </div>
+
+</div>
+
+
+
+
+
+
+<% if false %>
+
+
 <h1>User Show</h1>
 
 <%= user_avatar(@user, size=100) %>
@@ -98,3 +282,5 @@
 <% end %>
 <br>
 <%= link_to "Back", :back %>
+
+<% end %>
