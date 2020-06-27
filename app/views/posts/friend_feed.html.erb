@@ -97,93 +97,10 @@
 
   <% end %>
 <% else %>
-  <h3>NO FRIENDS ADDED</h3>
-  <h4><%= link_to "Add friends", users_path %></h4>
+  <h1 id="title-no-friends" class="glow">NO FRIENDS ADDED!</h1>
+  <%= link_to "Add friends", users_path, id: "no-friends-link" %>
 <% end %>
 
 <div class="paginate-pages-div">
   <%= will_paginate @paged_and_sorted, inner_window: 1, outer_window: 0, :previous_label => '◀', :next_label => '▶' %>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<% if false %>
-
-
-<h1>Friends Feed</h1>
-<% unless @user_friends.count == 0 %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Avatar</th>
-      <th>User</th>
-      <th>Title</th>
-      <th>Content</th>
-      <th># of Comments</th>
-      <th>Likes</th>
-      <th>Like button</th>
-      <th>Posted at</th>
-      <th>Edited at</th>
-      <th>Image(optional)</th>
-    </tr>
-  </thead>
-    <tbody>
-      <% @paged_and_sorted.each do |friend_post| %>   
-        <tr>
-          <td>
-            <%= user_avatar(User.find(friend_post.user_id), size=40) %>
-          </td>
-          <td><%= link_to User.find_by(id: friend_post.user_id).first_name + " " + User.find_by(id: friend_post.user_id).last_name, User.find_by(id: friend_post.user_id) %></td>
-          <td><%= link_to friend_post.title, friend_post %></td>
-          
-          <% unless friend_post.body.blank? %>
-            <td><%= friend_post.body %></td>
-          <% else %>
-            <td>NO OPTIONAL CONTENT</td>
-          <% end %>
-
-          <td><%= friend_post.comments.count %></td>
-          <td id=<%= "friend_feed_like_count#{friend_post.id}" %>><%= friend_post.likes.count %></td>
-          <td>
-            <% @index_like_exists = Like.where(post_id: friend_post.id, user_id: current_user.id) == [] ? "Like" : "Unlike" %>
-
-            <%= link_to @index_like_exists, friend_feed_likes_update_like_path(id: friend_post.id), method: :put, remote: true, id: "friend_feed_#{friend_post.id}" %>
-          </td>
-          <% if friend_post.created_at == friend_post.updated_at %>
-            <td><%= time_ago_in_words(friend_post.created_at, include_seconds: true)%> ago</td>
-            <td>No edit</td>
-          <% else %>
-            <td><%= time_ago_in_words(friend_post.created_at, include_seconds: true)%> ago</td>
-            <td>Edited <%= time_ago_in_words(friend_post.updated_at, include_seconds: true)%> ago</td>
-          <% end %>
-
-          <% if friend_post.image.attached? %>
-            <td><%= image_tag friend_post.image.variant(resize: '300x300!') %></td>
-          <% else %>
-            <td>No image</td>
-          <% end %>
-        </tr>
-      <%end%>
-    </tbody>
-  </table>
-  <%= will_paginate @paged_and_sorted, inner_window: 1, outer_window: 0 %>
-<% else %>
-  <h3>NO FRIENDS ADDED</h3>
-  <h4><%= link_to "Add friends", users_path %></h4>
-<% end %>
-
-
-<% end %>

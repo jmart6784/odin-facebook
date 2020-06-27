@@ -1,43 +1,39 @@
-<h1>All Users</h1>
+<div id="u-index-div">
+  <% @users.each do |another_user| %>
+  <% next if current_user.id == another_user.id %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Avatar</th>
-      <th>User</th>
-      <th>Friendship status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |another_user| %>
+    <div id="user-index-container">
 
-      <% next if current_user.id == another_user.id %>
-      <tr>
-        <td>
-          <%= user_avatar(another_user, size=40) %>
-        </td>
-        <td>
-          <%= link_to another_user.first_name + " " + another_user.last_name, another_user %>
-        </td>
+      <%= link_to another_user, id: "au-link" do %>
+        <%= user_avatar(another_user, size=100) %>
+      <% end %>
+
+      <div id="u-index-right">
+
+        <%= link_to another_user.first_name + " " + another_user.last_name, another_user, id: "u-index-linkto-user" %>
 
         <% if friendship = current_user.friendships.find_by(friend_id: another_user)%>
             <% if friendship.pending? %>
-              <td>Request: Pending</td>
+              <p id="u-index-pending" class="p-margin">Request Pending</p>
             <% else %>
-              <td>Friend</td>
+              <p id="u-index-friend" class="p-margin">Friend</p>
             <% end %>
         <% elsif friendship = another_user.friendships.find_by(friend_id: current_user)%>
-          <td>
-            <%= link_to "Accept Friend Request", friendship_path(id: another_user), method: :patch %>
-            <%= link_to "Decline Friend Request", friendship_path(id: another_user), method: :delete %>
-          </td>
+          <div id="u-index-fr-options">
+            <%= link_to "Accept Friend Request", friendship_path(id: another_user), method: :patch, id: "u-index-accept" %>
+            <%= link_to "Decline Friend Request", friendship_path(id: another_user), method: :delete, id: "u-index-decline" %>
+          </div>
         <% else %>
-          <td>
-            <%= link_to 'Friend Request', friendships_path(friend_id: another_user), method: :post %>
-          </td>
+            <%= link_to '+Add Friend', friendships_path(friend_id: another_user), method: :post, class: "u-index-fr" %>
         <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= will_paginate @users, inner_window: 1, outer_window: 0 %>
+
+      </div>
+
+    </div>
+
+  <% end %>
+</div>
+
+<div class="paginate-pages-div">
+  <%= will_paginate @users, inner_window: 1, outer_window: 0, :previous_label => '◀', :next_label => '▶' %>
+</div>

@@ -1,7 +1,7 @@
 <div id="new-post-form-div">
   <% if @post.errors.any? %>
     <div id="new-post-errors">
-      <p id="flash-post-danger"><%= flash[:danger] %></p>
+      <p id="flash-post-danger" class="glow"><%= flash[:danger] %></p>
       <ul id="post-error-list">
         <% @post.errors.full_messages.each do |msg| %>
           <li class="post-errors"><span><%= msg %></span></li>
