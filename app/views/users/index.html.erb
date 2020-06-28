@@ -9,7 +9,6 @@
       <% end %>
 
       <div id="u-index-right">
-
         <%= link_to another_user.first_name + " " + another_user.last_name, another_user, id: "u-index-linkto-user" %>
 
         <% if friendship = current_user.friendships.find_by(friend_id: another_user)%>
@@ -26,11 +25,8 @@
         <% else %>
             <%= link_to '+Add Friend', friendships_path(friend_id: another_user), method: :post, class: "u-index-fr" %>
         <% end %>
-
       </div>
-
     </div>
-
   <% end %>
 </div>
 

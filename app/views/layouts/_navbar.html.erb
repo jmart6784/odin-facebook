@@ -13,17 +13,23 @@
         </div>
       <% end %>
 
-      <h3 class="qlinks">
-        <%= link_to "Global feed", posts_path %>
-      </h3>
+      <%= link_to posts_path, class: "qlinks" do %>
+        <h3>
+          Global feed
+        </h3>
+      <% end %>
 
-      <h3 class="qlinks">
-        <%= link_to "Friend feed", friend_feed_path %>
-      </h3>
+      <%= link_to friend_feed_path, class: "qlinks" do %>
+        <h3>
+          Friend feed
+        </h3>
+      <% end %>
 
-      <h3 class="qlinks">
-        <%= link_to "Find Friends", users_path %>
-      </h3>
+      <%= link_to users_path, class: "qlinks" do %>
+        <h3>
+          Find Friends
+        </h3>
+      <% end %>
 
       <div id="noti-drp-dwn">
         <% if notifications.count == 0 %>

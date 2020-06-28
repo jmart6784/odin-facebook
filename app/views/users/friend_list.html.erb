@@ -1,1 +1,69 @@
-<h1>Friend list</h1>
+<% @user = User.find(params[:id]) %>
+<% confirmed_friendships = @user.friendships.where(status: "confirmed") %>
+
+
+<% not_skipped = [] %>
+
+<% @friend_list = @user.friends %>
+<% @friend_list.each do |notskipped| %>
+
+  <% next if @user.friendships.where(friend_id: notskipped.id, status: "pending").exists? %>
+
+  <% not_skipped << notskipped %>
+<% end %>
+
+
+<% if confirmed_friendships.count > 0 %>
+  <% @do_friend_list = not_skipped.paginate(page: params[:page], per_page: 16) %>
+
+  <div id="u-index-div">
+    <% @do_friend_list.each do |friend| %>
+    <% friendship = current_user.friendships.find_by(friend_id: friend) %>
+
+      <div id="user-index-container">
+
+        <%= link_to friend, id: "au-link" do %>
+          <%= user_avatar(friend, size=100) %>
+        <% end %>
+
+        <div id="u-index-right">
+
+          <%= link_to friend.first_name + " " + friend.last_name, friend, id: "u-index-linkto-user" %>
+
+          <% if friendship %>
+              <% if friendship.pending? %>
+                <p id="u-index-pending" class="p-margin">Request Pending</p>
+              <% else %>
+                <p id="u-index-friend" class="p-margin">Friend</p>
+              <% end %>
+          <% elsif friendship = friend.friendships.find_by(friend_id: current_user)%>
+            <div id="u-index-fr-options">
+              <%= link_to "Accept Friend Request", friendship_path(id: friend), method: :patch, id: "u-index-accept" %>
+              <%= link_to "Decline Friend Request", friendship_path(id: friend), method: :delete, id: "u-index-decline" %>
+            </div>
+          <% else %>
+              <%= link_to '+Add Friend', friendships_path(friend_id: friend), method: :post, class: "u-index-fr" %>
+          <% end %>
+
+        </div>
+
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="paginate-pages-div">
+    <%= will_paginate @do_friend_list, inner_window: 1, outer_window: 0, :previous_label => '◀', :next_label => '▶' %>
+  </div>
+<% elsif confirmed_friendships.count == 0 && current_user == @user %>
+  <h1 id="title-no-friends" class="glow">NO FRIENDS ADDED!</h1>
+  <%= link_to "Find friends!", users_path, id: "no-friends-link" %>
+<% elsif confirmed_friendships.count == 0 && current_user != @user %>
+  <h1 id="title-no-friends" class="glow">This user has no friends!</h1>
+
+  <% unless Friendship.where(user_id: current_user.id, friend_id: @user.id, status: "pending").exists?  %>
+    <%= link_to "+Add Friend", friendships_path(friend_id: @user.id), method: :post, id: "add-frd-frd-list" %>
+  <% else %>
+    <h1 id="frd-list-pend">Request Pending</h1>
+  <% end %>
+<% end %>
