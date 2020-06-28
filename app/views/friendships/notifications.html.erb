@@ -1,21 +1,31 @@
-<h1>Notifications</h1>
-<% if notifications.empty? %>
-  <h3>No new notifications</h3>
-<% else %>
-  <% notifications.each do |notification| %>
-    <% friendship = Friendship.where(user_id: notification.user.id).find_by(friend_id:current_user)  %>
+<div id="fr-container">
+  <% if notifications.empty? %>
+    <h3>No new notifications</h3>
+  <% else %>
+    <% notifications.each do |notification| %>
+      <% friendship = Friendship.where(user_id: notification.user.id).find_by(friend_id: current_user.id)  %>
 
-    <% if friendship %>
-      <div>
-        <%= user_avatar(User.find(notification.user_id), size=100) %>
-        <h3>
-          <%= link_to notification.user.first_name + " " + notification.user.last_name, User.find(notification.user_id) %>
-          wants to be your friend
-        </h3>
-        <%= link_to "Accept Friend Request", "friendships/#{notification.user.id}", method: :patch %>
-        <%= link_to "Decline Friend Request", "friendships/#{notification.user.id}", method: :delete %>
-      </div>
+      <% if friendship %>
+        <div id="fr-div">
+
+          <div id="fr-name">
+            <%= link_to User.find(notification.user_id), id: "noti-avatar" do %>
+              <%= user_avatar(User.find(notification.user_id), size=60) %>
+            <% end %>
+
+            <h3 id="fr-name-text">
+              <%= link_to notification.user.first_name + " " + notification.user.last_name, User.find(notification.user_id) %>
+              wants to be your friend
+            </h3>
+          </div>
+
+          <div id="noti-options">
+            <%= button_to "Accept", "friendships/#{notification.user.id}", method: :patch, id: "noti-accept" %>
+        
+            <%= button_to "Decline", "friendships/#{notification.user.id}", method: :delete, id: "noti-decline" %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
-
-<% end %>
+</div>
