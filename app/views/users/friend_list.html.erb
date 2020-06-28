@@ -34,7 +34,7 @@
               <% if friendship.pending? %>
                 <p id="u-index-pending" class="p-margin">Request Pending</p>
               <% else %>
-                <p id="u-index-friend" class="p-margin">Friend</p>
+                <%= button_to "Unfriend", friendship_path(id: friend), method: :delete, id: "u-index-friend" %>
               <% end %>
           <% elsif friendship = friend.friendships.find_by(friend_id: current_user)%>
             <div id="u-index-fr-options">
