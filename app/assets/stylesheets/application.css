@@ -1223,8 +1223,7 @@ textarea {
 
 #noti-accept {
   display: block;
-  width: 100%;
-  height: 100%;
+  padding-top: 12px;
   background-color: rgb(20, 131, 25);
   border: 3px solid rgb(20, 131, 25);
   color: white;
@@ -1237,8 +1236,7 @@ textarea {
 
 #noti-decline {
   display: block;
-  width: 100%;
-  height: 100%;
+  padding: 12px;
   background-color: rgb(97, 0, 0);
   border: 3px solid rgb(97, 0, 0);
   color: white;

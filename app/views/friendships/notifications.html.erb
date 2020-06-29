@@ -20,9 +20,9 @@
           </div>
 
           <div id="noti-options">
-            <%= button_to "Accept", "friendships/#{notification.user.id}", method: :patch, id: "noti-accept" %>
+            <%= link_to "Accept", "friendships/#{notification.user.id}", method: :patch, id: "noti-accept" %>
         
-            <%= button_to "Decline", "friendships/#{notification.user.id}", method: :delete, id: "noti-decline" %>
+            <%= link_to "Decline", "friendships/#{notification.user.id}", method: :delete, id: "noti-decline" %>
           </div>
         </div>
       <% end %>
