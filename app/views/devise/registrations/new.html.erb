@@ -8,32 +8,32 @@
 
       <div class="sign-up-2-col">
         <div class="field">
-          <%= f.label :first_name %><br />
+          <%= f.label :first_name, class: "s-u-labels" %><br />
           <%= f.text_field :first_name, autofocus: true, class: "s-u-fields" %>
         </div>
 
         <div class="field">
-          <%= f.label :last_name %><br />
+          <%= f.label :last_name, class: "s-u-labels" %><br />
           <%= f.text_field :last_name, class: "s-u-fields" %>
         </div>
       </div>
 
       <div class="field">
-        <%= f.label :email %><br />
+        <%= f.label :email, class: "s-u-labels" %><br />
         <%= f.email_field :email, autocomplete: "email", id: "s-u-email" %>
       </div>
 
       <div class="sign-up-2-col">
         <div class="field">
-          <%= f.label :password %>
+          <%= f.label :password, class: "s-u-labels" %>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em class="s-u-labels">(<%= @minimum_password_length %> characters minimum)</em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: "new-password", class: "s-u-fields" %>
         </div>
 
         <div class="field">
-          <%= f.label :password_confirmation %><br />
+          <%= f.label :password_confirmation, class: "s-u-labels" %><br />
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "s-u-fields" %>
         </div>
       </div>
