@@ -6,9 +6,7 @@
 <% end %>
 
 <div id="u-show-container">
-
   <div id="u-show-header">
-
     <div id="u-info-0">
 
       <div id="u-show-avatar"><%= user_avatar(@user, size=170) %></div>
@@ -42,8 +40,11 @@
     <div id="u-bio-div">
       <% if @user.bio %>
         <p id="bio-title">Bio</p>
-        <p id="u-bio"><%= @user.bio %></p>
-        <%= link_to "Edit Bio", edit_user_registration_path, id: "u-edit" if current_user == @user %>
+        
+        <% unless @user.bio.length == 0 %>
+          <p id="u-bio"><%= @user.bio %></p>
+          <%= link_to "Edit Bio", edit_user_registration_path, id: "u-edit" if current_user == @user %>
+         <% end %>
       <% end %>
     </div>
 
@@ -65,7 +66,6 @@
         <% end %>
       <% end %>
     </div>
-
   </div>
 
   <div id="u-show-posts-div">
@@ -167,8 +167,6 @@
     <div class="paginate-pages-div">
       <%= will_paginate @users_posts, inner_window: 1, outer_window: 0, :previous_label => '◀', :next_label => '▶' %>
     </div>
-
-
     <% elsif current_user.id == @user.id && @user.posts.count == 0 %>
       <div id="no-posts-owner">
         <p id="u-no-posts-title" class="glow">You haven't posted anything</p>
@@ -178,5 +176,4 @@
       <p id="no-posts-au"><%= @user.first_name + " " + @user.last_name + " hasn't posted yet" %></p>
     <% end %>
   </div>
-
 </div>
