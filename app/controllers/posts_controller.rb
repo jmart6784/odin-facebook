@@ -53,9 +53,10 @@ class PostsController < ApplicationController
   def friend_feed
     @post_ary = []
     @user_friends = current_user.friends
+    @confirmed_friends = current_user.friendships.where(status: "confirmed")
 
     @user_friends.each do |friend|
-      next if Friendship.where(status: "pending", friend_id: friend.id).exists?
+      next if current_user.friendships.where(status: "pending", friend_id: friend.id).exists?
 
       friend.posts.each do |unsorted_posts|
         @post_ary << unsorted_posts

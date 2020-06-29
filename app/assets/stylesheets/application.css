@@ -672,6 +672,11 @@ textarea {
   }
 }
 
+#no-frd-posts {
+  text-align: center;
+  margin-top: 400px;
+}
+
 /* User index */
 #u-index-div {
   margin-top: 100px;
