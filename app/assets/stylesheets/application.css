@@ -240,6 +240,7 @@ textarea {
   grid-template-columns: 0.1fr 0.3fr 2fr 0.4fr;
   background-color: rgb(15, 87, 77);
   padding: 5px;
+  word-wrap: break-word;
 }
 
 .index-avatar {
@@ -337,7 +338,7 @@ textarea {
   display: grid;
   grid-template-columns: 0.35fr 1fr 1fr;
   background-color: rgb(15, 87, 77);
-
+  word-wrap: break-word;
 }
 
 .index-like-count {
@@ -353,6 +354,15 @@ textarea {
   text-align: center;
   font-size: 30px;
   height: fit-content;
+}
+
+#no-index-posts {
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 50px;
+  padding: 20px;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 /* Will_paginate */
@@ -1066,7 +1076,6 @@ textarea {
   font-size: 25px;
   width: 100%;
   padding-top: 10px;
-  background-color: rgb(5, 24, 22);
 }
 
 #bio-text-field {
@@ -1248,6 +1257,13 @@ textarea {
   border: 3px solid white;
 }
 
+#no-noti {
+  font-size: 50px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 300px;
+}
+
 /* Sign up */
 #sign-up-container {
   text-align: center;
@@ -1310,10 +1326,6 @@ textarea {
 #s-u-submit:hover {
   border: 3px solid white;
 }
-
-/* #log-in-options {
-
-} */
 
 #log-in-options a {
   display: block;

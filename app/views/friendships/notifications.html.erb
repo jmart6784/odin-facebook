@@ -1,6 +1,6 @@
 <div id="fr-container">
   <% if notifications.empty? %>
-    <h3>No new notifications</h3>
+    <h3 id="no-noti">No new notifications</h3>
   <% else %>
     <% notifications.each do |notification| %>
       <% friendship = Friendship.where(user_id: notification.user.id).find_by(friend_id: current_user.id)  %>

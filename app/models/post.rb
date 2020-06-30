@@ -18,5 +18,4 @@ class Post < ApplicationRecord
       errors.add(:image, "must be a JPEG or PNG.")
     end
   end
-
 end
