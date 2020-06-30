@@ -39,9 +39,8 @@
 
     <div id="u-bio-div">
       <% if @user.bio %>
-        <p id="bio-title">Bio</p>
-        
         <% unless @user.bio.length == 0 %>
+          <p id="bio-title">Bio</p>
           <p id="u-bio"><%= @user.bio %></p>
           <%= link_to "Edit Bio", edit_user_registration_path, id: "u-edit" if current_user == @user %>
          <% end %>

@@ -16,7 +16,7 @@
 
       <%= f.text_area :body, id: "new-post-body-field", placeholder: "Body(optional if posting a photo)" %><br>
 
-      <% if @post.image.attached? %>
+      <% if @post.image.attached? && @post.image.content_type.in?(%(image/jpeg image/png)) %>
         <%= image_tag @post.image.variant(resize: '300x300!') %><br>
       <% end %>
 

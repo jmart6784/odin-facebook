@@ -14,8 +14,9 @@ class Post < ApplicationRecord
   private
 
   def image_type
-    if !image.content_type.in?(%('image/jpeg image/jpg image/png'))
-      errors.add(:image, "needs to be JPG or PNG")
+    if image.attached? && !image.content_type.in?(%(image/jpeg image/png))
+      errors.add(:image, "must be a JPEG or PNG.")
     end
   end
+
 end
