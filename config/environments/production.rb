@@ -3,20 +3,6 @@ Rails.application.configure do
 
   config.force_ssl = true
 
-  config.action_mailer.default_url_options = { :host => '.herokuapp.com' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true 
-  config.raise_delivery_errors = true
-  config.action_mailer.smtp_settings = {
-    :user_name => Rails.application.credentials.dig(:sendgrid, :username),
-    :password => Rails.application.credentials.dig(:sendgrid, :password),
-    :domain => "heroku.com",
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
-  }
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
