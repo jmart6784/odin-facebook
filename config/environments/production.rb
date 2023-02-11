@@ -3,14 +3,14 @@ Rails.application.configure do
 
   config.force_ssl = true
 
-  config.action_mailer.default_url_options = { :host => 'odinbook-app.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'odinbook.fly.dev' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true 
   config.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    :user_name => ENV["SENDGRID_USERNAME"],
-    :password => ENV["SENDGRID_PASSWORD"],
-    :domain => "heroku.com",
+    :user_name => Rails.application.credentials.dig(:sendgrid, :username),
+    :password => Rails.application.credentials.dig(:sendgrid, :password),
+    :domain => "fly.io",
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,
